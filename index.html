@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ma Diète — planner & macros</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#F6F7F4">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
 <style>
 :root{
   --bg:#F6F7F4; --surface:#FFFFFF; --ink:#1E2620; --muted:#69736D; --line:#E3E8E0;
@@ -144,7 +151,3700 @@ th.tnum{text-align:right}
 <div id="modalRoot"></div>
 
 <script>
-const DEFAULT_DATA = {"meta": {"version": "2.0", "langue": "fr", "note": "Macros pour 100 g, pesé CRU. Quantités des recettes en grammes (cru). Macros recettes recalculées depuis les ingrédients.", "objectifs_defaut": {"poids_kg": 80, "kcal_jour": 2500, "proteines_g": 160, "lipides_g": 80, "fibres_g": 30, "repartition_proteines": {"matin": 25, "midi": 45, "16h": 25, "soir": 45, "22h": 20}}}, "ingredients": [{"id": "poulet_blanc", "nom": "Blanc de poulet", "categorie": "Viandes & poissons", "rayon": "Boucherie / Volaille", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 121, "proteines": 23.0, "glucides": 0.0, "lipides": 2.7, "fibres": 0.0}}, {"id": "steak_hache_5", "nom": "Steak haché bœuf 5% MG", "categorie": "Viandes & poissons", "rayon": "Boucherie / Volaille", "poids_unitaire_g": 125, "macros_pour_100g": {"kcal": 137, "proteines": 21.0, "glucides": 0.0, "lipides": 5.0, "fibres": 0.0}}, {"id": "basse_cote", "nom": "Basse côte de bœuf", "categorie": "Viandes & poissons", "rayon": "Boucherie / Volaille", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 210, "proteines": 19.0, "glucides": 0.0, "lipides": 15.0, "fibres": 0.0}}, {"id": "entrecote", "nom": "Entrecôte de bœuf", "categorie": "Viandes & poissons", "rayon": "Boucherie / Volaille", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 215, "proteines": 19.0, "glucides": 0.0, "lipides": 15.5, "fibres": 0.0}}, {"id": "cabillaud", "nom": "Cabillaud / poisson blanc", "categorie": "Viandes & poissons", "rayon": "Poissonnerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 82, "proteines": 18.0, "glucides": 0.0, "lipides": 0.7, "fibres": 0.0}}, {"id": "saumon", "nom": "Saumon frais", "categorie": "Viandes & poissons", "rayon": "Poissonnerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 200, "proteines": 20.0, "glucides": 0.0, "lipides": 13.0, "fibres": 0.0}}, {"id": "thon_boite", "nom": "Thon au naturel (égoutté)", "categorie": "Viandes & poissons", "rayon": "Conserves", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 110, "proteines": 25.0, "glucides": 0.0, "lipides": 1.0, "fibres": 0.0}}, {"id": "jambon_blanc", "nom": "Jambon blanc découenné", "categorie": "Viandes & poissons", "rayon": "Charcuterie", "poids_unitaire_g": 45, "macros_pour_100g": {"kcal": 110, "proteines": 20.0, "glucides": 1.0, "lipides": 3.0, "fibres": 0.0}}, {"id": "allumettes_bacon", "nom": "Allumettes de bacon", "categorie": "Viandes & poissons", "rayon": "Charcuterie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 110, "proteines": 19.0, "glucides": 1.0, "lipides": 3.5, "fibres": 0.0}}, {"id": "lardons_fumes", "nom": "Lardons fumés", "categorie": "Viandes & poissons", "rayon": "Charcuterie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 270, "proteines": 14.0, "glucides": 1.0, "lipides": 23.0, "fibres": 0.0}}, {"id": "saucisse_fumee", "nom": "Saucisse fumée", "categorie": "Viandes & poissons", "rayon": "Charcuterie", "poids_unitaire_g": 150, "macros_pour_100g": {"kcal": 300, "proteines": 14.0, "glucides": 2.0, "lipides": 26.0, "fibres": 0.0}}, {"id": "knacki", "nom": "Saucisse type knacki", "categorie": "Viandes & poissons", "rayon": "Charcuterie", "poids_unitaire_g": 35, "macros_pour_100g": {"kcal": 290, "proteines": 12.0, "glucides": 3.0, "lipides": 26.0, "fibres": 0.0}}, {"id": "oeuf", "nom": "Œuf entier", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": 50, "macros_pour_100g": {"kcal": 143, "proteines": 12.7, "glucides": 0.7, "lipides": 9.8, "fibres": 0.0}}, {"id": "riz_basmati", "nom": "Riz basmati", "categorie": "Féculents", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 350, "proteines": 7.5, "glucides": 78.0, "lipides": 0.9, "fibres": 1.4}}, {"id": "riz_noir", "nom": "Riz noir", "categorie": "Féculents", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 350, "proteines": 9.0, "glucides": 72.0, "lipides": 3.0, "fibres": 4.5}}, {"id": "pates_completes", "nom": "Pâtes blé complet", "categorie": "Féculents", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 350, "proteines": 13.0, "glucides": 64.0, "lipides": 2.5, "fibres": 8.0}}, {"id": "pates_blanches", "nom": "Pâtes blanches", "categorie": "Féculents", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 360, "proteines": 12.0, "glucides": 70.0, "lipides": 1.5, "fibres": 3.0}}, {"id": "nouilles_chinoises", "nom": "Nouilles chinoises", "categorie": "Féculents", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 350, "proteines": 11.0, "glucides": 71.0, "lipides": 1.5, "fibres": 3.0}}, {"id": "semoule_complete", "nom": "Semoule complète", "categorie": "Féculents", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 350, "proteines": 12.5, "glucides": 68.0, "lipides": 2.0, "fibres": 6.0}}, {"id": "pomme_de_terre", "nom": "Pomme de terre", "categorie": "Féculents", "rayon": "Fruits & légumes", "poids_unitaire_g": 150, "macros_pour_100g": {"kcal": 80, "proteines": 2.0, "glucides": 17.0, "lipides": 0.1, "fibres": 1.8}}, {"id": "patate_douce", "nom": "Patate douce", "categorie": "Féculents", "rayon": "Fruits & légumes", "poids_unitaire_g": 250, "macros_pour_100g": {"kcal": 86, "proteines": 1.6, "glucides": 19.0, "lipides": 0.1, "fibres": 3.0}}, {"id": "lentilles_corail", "nom": "Lentilles corail", "categorie": "Féculents", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 350, "proteines": 24.0, "glucides": 52.0, "lipides": 2.0, "fibres": 11.0}}, {"id": "quinoa", "nom": "Quinoa", "categorie": "Féculents", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 368, "proteines": 14.0, "glucides": 60.0, "lipides": 6.0, "fibres": 7.0}}, {"id": "flocons_avoine", "nom": "Flocons d'avoine", "categorie": "Féculents", "rayon": "Épicerie sucrée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 370, "proteines": 13.0, "glucides": 60.0, "lipides": 7.0, "fibres": 9.0}}, {"id": "farine_complete", "nom": "Farine de blé complète", "categorie": "Féculents", "rayon": "Épicerie sucrée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 340, "proteines": 11.0, "glucides": 64.0, "lipides": 2.0, "fibres": 8.0}}, {"id": "farine_ble", "nom": "Farine de blé T55", "categorie": "Féculents", "rayon": "Épicerie sucrée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 350, "proteines": 10.0, "glucides": 72.0, "lipides": 1.0, "fibres": 3.0}}, {"id": "pain_complet", "nom": "Pain complet", "categorie": "Féculents", "rayon": "Boulangerie", "poids_unitaire_g": 30, "macros_pour_100g": {"kcal": 250, "proteines": 9.0, "glucides": 43.0, "lipides": 2.5, "fibres": 7.0}}, {"id": "wrap_complet", "nom": "Tortilla / wrap complet", "categorie": "Féculents", "rayon": "Épicerie salée", "poids_unitaire_g": 60, "macros_pour_100g": {"kcal": 300, "proteines": 9.0, "glucides": 50.0, "lipides": 5.0, "fibres": 6.0}}, {"id": "feuilles_lasagne", "nom": "Feuilles de lasagnes", "categorie": "Féculents", "rayon": "Épicerie salée", "poids_unitaire_g": 17, "macros_pour_100g": {"kcal": 360, "proteines": 12.0, "glucides": 71.0, "lipides": 2.0, "fibres": 3.0}}, {"id": "brocolis", "nom": "Brocolis", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 34, "proteines": 2.8, "glucides": 4.0, "lipides": 0.4, "fibres": 2.6}}, {"id": "carotte", "nom": "Carotte", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 125, "macros_pour_100g": {"kcal": 40, "proteines": 0.8, "glucides": 8.0, "lipides": 0.2, "fibres": 2.7}}, {"id": "chou_blanc", "nom": "Chou blanc", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 25, "proteines": 1.3, "glucides": 4.0, "lipides": 0.1, "fibres": 2.5}}, {"id": "salade_verte", "nom": "Salade verte", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 15, "proteines": 1.4, "glucides": 1.5, "lipides": 0.2, "fibres": 1.3}}, {"id": "aubergine", "nom": "Aubergine", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 300, "macros_pour_100g": {"kcal": 25, "proteines": 1.0, "glucides": 4.0, "lipides": 0.2, "fibres": 3.0}}, {"id": "courgette", "nom": "Courgette", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 250, "macros_pour_100g": {"kcal": 17, "proteines": 1.2, "glucides": 2.2, "lipides": 0.3, "fibres": 1.1}}, {"id": "poivron_rouge", "nom": "Poivron rouge", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 150, "macros_pour_100g": {"kcal": 30, "proteines": 1.0, "glucides": 5.0, "lipides": 0.3, "fibres": 2.0}}, {"id": "tomate", "nom": "Tomate", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 120, "macros_pour_100g": {"kcal": 18, "proteines": 0.9, "glucides": 3.0, "lipides": 0.2, "fibres": 1.2}}, {"id": "poireau", "nom": "Poireau", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 200, "macros_pour_100g": {"kcal": 29, "proteines": 1.5, "glucides": 4.0, "lipides": 0.3, "fibres": 2.5}}, {"id": "champignon", "nom": "Champignons de Paris", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 22, "proteines": 2.5, "glucides": 2.0, "lipides": 0.3, "fibres": 1.5}}, {"id": "haricots_verts", "nom": "Haricots verts", "categorie": "Fruits & légumes", "rayon": "Surgelés", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 31, "proteines": 1.8, "glucides": 5.0, "lipides": 0.2, "fibres": 3.0}}, {"id": "epinards", "nom": "Épinards", "categorie": "Fruits & légumes", "rayon": "Surgelés", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 23, "proteines": 2.7, "glucides": 1.5, "lipides": 0.4, "fibres": 2.2}}, {"id": "oignon", "nom": "Oignon jaune", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 110, "macros_pour_100g": {"kcal": 40, "proteines": 1.2, "glucides": 8.0, "lipides": 0.2, "fibres": 1.7}}, {"id": "oignon_rouge", "nom": "Oignon rouge", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 110, "macros_pour_100g": {"kcal": 40, "proteines": 1.2, "glucides": 8.0, "lipides": 0.2, "fibres": 1.7}}, {"id": "ail", "nom": "Ail", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 3, "macros_pour_100g": {"kcal": 130, "proteines": 6.0, "glucides": 28.0, "lipides": 0.5, "fibres": 5.0}}, {"id": "gingembre", "nom": "Gingembre frais", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 80, "proteines": 1.8, "glucides": 16.0, "lipides": 0.8, "fibres": 2.0}}, {"id": "jus_citron", "nom": "Jus de citron", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 22, "proteines": 0.4, "glucides": 6.5, "lipides": 0.2, "fibres": 0.1}}, {"id": "banane", "nom": "Banane", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 120, "macros_pour_100g": {"kcal": 90, "proteines": 1.1, "glucides": 20.0, "lipides": 0.3, "fibres": 1.7}}, {"id": "pomme", "nom": "Pomme", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": 150, "macros_pour_100g": {"kcal": 52, "proteines": 0.3, "glucides": 12.0, "lipides": 0.2, "fibres": 2.4}}, {"id": "fruits_rouges", "nom": "Fruits rouges", "categorie": "Fruits & légumes", "rayon": "Surgelés", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 50, "proteines": 1.0, "glucides": 9.0, "lipides": 0.3, "fibres": 4.0}}, {"id": "coriandre", "nom": "Coriandre fraîche", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 25, "proteines": 2.0, "glucides": 4.0, "lipides": 0.5, "fibres": 3.0}}, {"id": "persil", "nom": "Persil frais", "categorie": "Fruits & légumes", "rayon": "Fruits & légumes", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 36, "proteines": 3.0, "glucides": 6.0, "lipides": 0.8, "fibres": 3.0}}, {"id": "fromage_blanc_0", "nom": "Fromage blanc 0%", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 45, "proteines": 8.0, "glucides": 4.0, "lipides": 0.2, "fibres": 0.0}}, {"id": "skyr", "nom": "Skyr nature", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 57, "proteines": 10.0, "glucides": 4.0, "lipides": 0.2, "fibres": 0.0}}, {"id": "fromage_blanc_3", "nom": "Fromage blanc 3% MG", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 75, "proteines": 7.5, "glucides": 4.0, "lipides": 3.4, "fibres": 0.0}}, {"id": "lait_ecreme", "nom": "Lait écrémé", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 35, "proteines": 3.4, "glucides": 5.0, "lipides": 0.2, "fibres": 0.0}}, {"id": "lait_demi", "nom": "Lait demi-écrémé", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 46, "proteines": 3.2, "glucides": 4.8, "lipides": 1.6, "fibres": 0.0}}, {"id": "creme_liquide_allegee", "nom": "Crème liquide allégée 15%", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 160, "proteines": 3.0, "glucides": 4.0, "lipides": 15.0, "fibres": 0.0}}, {"id": "parmesan", "nom": "Parmesan râpé", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 390, "proteines": 33.0, "glucides": 1.0, "lipides": 29.0, "fibres": 0.0}}, {"id": "mozzarella_light", "nom": "Mozzarella light", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": 125, "macros_pour_100g": {"kcal": 163, "proteines": 20.0, "glucides": 2.0, "lipides": 8.5, "fibres": 0.0}}, {"id": "emmental_allege", "nom": "Emmental râpé allégé", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 270, "proteines": 28.0, "glucides": 1.0, "lipides": 17.0, "fibres": 0.0}}, {"id": "fromage_frais_allege", "nom": "Fromage frais allégé", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 150, "proteines": 8.0, "glucides": 4.0, "lipides": 11.0, "fibres": 0.0}}, {"id": "beurre", "nom": "Beurre", "categorie": "Crémerie", "rayon": "Crémerie", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 750, "proteines": 0.7, "glucides": 0.7, "lipides": 83.0, "fibres": 0.0}}, {"id": "pulpe_tomate", "nom": "Pulpe / sauce tomate nature", "categorie": "Sauces & condiments", "rayon": "Conserves", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 32, "proteines": 1.4, "glucides": 5.0, "lipides": 0.3, "fibres": 1.3}}, {"id": "concentre_tomate", "nom": "Concentré de tomate", "categorie": "Sauces & condiments", "rayon": "Conserves", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 80, "proteines": 4.5, "glucides": 14.0, "lipides": 0.5, "fibres": 3.0}}, {"id": "lait_coco_allege", "nom": "Lait de coco allégé", "categorie": "Sauces & condiments", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 110, "proteines": 1.0, "glucides": 3.0, "lipides": 10.0, "fibres": 0.0}}, {"id": "beurre_cacahuete", "nom": "Beurre de cacahuète", "categorie": "Sauces & condiments", "rayon": "Épicerie sucrée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 600, "proteines": 26.0, "glucides": 12.0, "lipides": 50.0, "fibres": 6.0}}, {"id": "miel", "nom": "Miel", "categorie": "Sauces & condiments", "rayon": "Épicerie sucrée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 320, "proteines": 0.3, "glucides": 80.0, "lipides": 0.0, "fibres": 0.0}}, {"id": "moutarde", "nom": "Moutarde", "categorie": "Sauces & condiments", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 140, "proteines": 7.0, "glucides": 6.0, "lipides": 10.0, "fibres": 2.0}}, {"id": "sauce_soja", "nom": "Sauce soja (sel réduit)", "categorie": "Sauces & condiments", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 50, "proteines": 5.0, "glucides": 6.0, "lipides": 0.3, "fibres": 0.0}}, {"id": "haricots_rouges", "nom": "Haricots rouges (égouttés)", "categorie": "Conserves", "rayon": "Conserves", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 110, "proteines": 7.8, "glucides": 16.0, "lipides": 0.6, "fibres": 7.0}}, {"id": "pois_chiches", "nom": "Pois chiches (égouttés)", "categorie": "Conserves", "rayon": "Conserves", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 120, "proteines": 6.0, "glucides": 17.0, "lipides": 2.0, "fibres": 5.0}}, {"id": "mais", "nom": "Maïs (égoutté)", "categorie": "Conserves", "rayon": "Conserves", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 95, "proteines": 3.0, "glucides": 17.0, "lipides": 1.3, "fibres": 3.0}}, {"id": "noix_cajou", "nom": "Noix de cajou", "categorie": "Épicerie", "rayon": "Épicerie sucrée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 580, "proteines": 18.0, "glucides": 30.0, "lipides": 44.0, "fibres": 3.0}}, {"id": "amandes", "nom": "Amandes", "categorie": "Épicerie", "rayon": "Épicerie sucrée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 610, "proteines": 21.0, "glucides": 7.0, "lipides": 53.0, "fibres": 12.0}}, {"id": "chocolat_noir", "nom": "Chocolat noir 70% / pépites", "categorie": "Épicerie", "rayon": "Épicerie sucrée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 550, "proteines": 8.0, "glucides": 30.0, "lipides": 40.0, "fibres": 10.0}}, {"id": "bouillon_cube", "nom": "Cube de bouillon", "categorie": "Épicerie", "rayon": "Épicerie salée", "poids_unitaire_g": 10, "macros_pour_100g": {"kcal": 200, "proteines": 10.0, "glucides": 20.0, "lipides": 10.0, "fibres": 0.0}}, {"id": "levure_chimique", "nom": "Levure chimique", "categorie": "Épicerie", "rayon": "Épicerie sucrée", "poids_unitaire_g": 10, "macros_pour_100g": {"kcal": 100, "proteines": 0.0, "glucides": 40.0, "lipides": 0.0, "fibres": 0.0}}, {"id": "whey", "nom": "Whey protéine (poudre)", "categorie": "Épicerie", "rayon": "Nutrition sportive", "poids_unitaire_g": 30, "macros_pour_100g": {"kcal": 380, "proteines": 78.0, "glucides": 6.0, "lipides": 5.0, "fibres": 0.0}}, {"id": "huile_olive", "nom": "Huile d'olive", "categorie": "Matières grasses", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 900, "proteines": 0.0, "glucides": 0.0, "lipides": 100.0, "fibres": 0.0}}, {"id": "huile_sesame", "nom": "Huile de sésame", "categorie": "Matières grasses", "rayon": "Épicerie salée", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 900, "proteines": 0.0, "glucides": 0.0, "lipides": 100.0, "fibres": 0.0}}, {"id": "paprika_fume", "nom": "Paprika fumé", "categorie": "Épices", "rayon": "Épices", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 280, "proteines": 14.0, "glucides": 54.0, "lipides": 13.0, "fibres": 35.0}}, {"id": "curry", "nom": "Curry en poudre", "categorie": "Épices", "rayon": "Épices", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 320, "proteines": 13.0, "glucides": 55.0, "lipides": 14.0, "fibres": 33.0}}, {"id": "curcuma", "nom": "Curcuma", "categorie": "Épices", "rayon": "Épices", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 350, "proteines": 8.0, "glucides": 65.0, "lipides": 10.0, "fibres": 21.0}}, {"id": "cumin", "nom": "Cumin", "categorie": "Épices", "rayon": "Épices", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 375, "proteines": 18.0, "glucides": 44.0, "lipides": 22.0, "fibres": 10.0}}, {"id": "garam_masala", "nom": "Garam masala", "categorie": "Épices", "rayon": "Épices", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 380, "proteines": 15.0, "glucides": 45.0, "lipides": 15.0, "fibres": 25.0}}, {"id": "ras_el_hanout", "nom": "Ras el hanout", "categorie": "Épices", "rayon": "Épices", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 300, "proteines": 12.0, "glucides": 50.0, "lipides": 10.0, "fibres": 25.0}}, {"id": "herbes_provence", "nom": "Herbes de Provence", "categorie": "Épices", "rayon": "Épices", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 290, "proteines": 9.0, "glucides": 64.0, "lipides": 7.0, "fibres": 43.0}}, {"id": "piment_cayenne", "nom": "Piment de Cayenne", "categorie": "Épices", "rayon": "Épices", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 320, "proteines": 12.0, "glucides": 57.0, "lipides": 17.0, "fibres": 27.0}}, {"id": "ail_poudre", "nom": "Ail en poudre", "categorie": "Épices", "rayon": "Épices", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 330, "proteines": 16.0, "glucides": 70.0, "lipides": 1.0, "fibres": 9.0}}, {"id": "cannelle", "nom": "Cannelle", "categorie": "Épices", "rayon": "Épices", "poids_unitaire_g": null, "macros_pour_100g": {"kcal": 250, "proteines": 4.0, "glucides": 55.0, "lipides": 3.0, "fibres": 43.0}}], "recettes": [{"id": "poulet_riz_brocolis", "nom": "Poulet, riz, brocolis", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["poulet", "basique", "meal prep"], "ingredients": [{"ingredient_id": "poulet_blanc", "quantite_g": 1000}, {"ingredient_id": "riz_basmati", "quantite_g": 320}, {"ingredient_id": "brocolis", "quantite_g": 600}, {"ingredient_id": "sauce_soja", "quantite_g": 30}, {"ingredient_id": "huile_olive", "quantite_g": 20}, {"ingredient_id": "ail_poudre", "quantite_g": 4}], "etapes": ["Cuire le riz. Cuire les brocolis vapeur 8-10 min (encore croquants).", "Saisir le poulet en cubes à l'huile d'olive, déglacer à la sauce soja, ail en poudre.", "Répartir en 4 tups : 250 g poulet, 80 g riz (cru), 150 g brocolis."], "macros_totales": {"kcal": 2742.2, "proteines": 272.9, "glucides": 278.2, "lipides": 52.4, "fibres": 20.4}, "macros_par_portion": {"kcal": 685.5, "proteines": 68.2, "glucides": 69.5, "lipides": 13.1, "fibres": 5.1}}, {"id": "poulet_coco_curry", "nom": "Poulet coco curry + riz", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["poulet", "meal prep"], "ingredients": [{"ingredient_id": "poulet_blanc", "quantite_g": 1000}, {"ingredient_id": "lait_coco_allege", "quantite_g": 400}, {"ingredient_id": "oignon", "quantite_g": 110}, {"ingredient_id": "ail", "quantite_g": 9}, {"ingredient_id": "curry", "quantite_g": 12}, {"ingredient_id": "curcuma", "quantite_g": 5}, {"ingredient_id": "jus_citron", "quantite_g": 15}, {"ingredient_id": "riz_basmati", "quantite_g": 320}, {"ingredient_id": "huile_olive", "quantite_g": 10}], "etapes": ["Mariner le poulet en dés avec curry, curcuma, citron.", "Suer oignon + ail, saisir le poulet, ajouter le lait de coco allégé, mijoter 15 min.", "Servir avec le riz (80 g cru / portion)."], "macros_totales": {"kcal": 2974.9, "proteines": 261.9, "glucides": 283.7, "lipides": 82.4, "fibres": 11.8}, "macros_par_portion": {"kcal": 743.7, "proteines": 65.5, "glucides": 70.9, "lipides": 20.6, "fibres": 3.0}}, {"id": "poulet_beurre_cacahuete", "nom": "Poulet sauce cacahuète + riz", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["poulet", "meal prep"], "ingredients": [{"ingredient_id": "poulet_blanc", "quantite_g": 1000}, {"ingredient_id": "beurre_cacahuete", "quantite_g": 80}, {"ingredient_id": "lait_coco_allege", "quantite_g": 200}, {"ingredient_id": "sauce_soja", "quantite_g": 40}, {"ingredient_id": "ail", "quantite_g": 9}, {"ingredient_id": "gingembre", "quantite_g": 10}, {"ingredient_id": "jus_citron", "quantite_g": 15}, {"ingredient_id": "riz_basmati", "quantite_g": 320}], "etapes": ["Saisir le poulet en cubes, réserver.", "Fouetter beurre de cacahuète + lait de coco + soja + ail + gingembre + citron, chauffer à feu doux.", "Enrober le poulet de sauce, servir avec le riz."], "macros_totales": {"kcal": 3073.0, "proteines": 279.6, "glucides": 272.7, "lipides": 90.2, "fibres": 9.9}, "macros_par_portion": {"kcal": 768.2, "proteines": 69.9, "glucides": 68.2, "lipides": 22.6, "fibres": 2.5}}, {"id": "butter_chicken", "nom": "Butter chicken léger + riz", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["poulet", "indien", "meal prep"], "ingredients": [{"ingredient_id": "poulet_blanc", "quantite_g": 800}, {"ingredient_id": "fromage_blanc_3", "quantite_g": 200}, {"ingredient_id": "jus_citron", "quantite_g": 15}, {"ingredient_id": "huile_olive", "quantite_g": 12}, {"ingredient_id": "garam_masala", "quantite_g": 12}, {"ingredient_id": "ail_poudre", "quantite_g": 6}, {"ingredient_id": "paprika_fume", "quantite_g": 12}, {"ingredient_id": "curcuma", "quantite_g": 10}, {"ingredient_id": "oignon", "quantite_g": 200}, {"ingredient_id": "ail", "quantite_g": 12}, {"ingredient_id": "gingembre", "quantite_g": 15}, {"ingredient_id": "concentre_tomate", "quantite_g": 5}, {"ingredient_id": "pulpe_tomate", "quantite_g": 400}, {"ingredient_id": "noix_cajou", "quantite_g": 40}, {"ingredient_id": "riz_basmati", "quantite_g": 200}], "etapes": ["Mariner le poulet (fromage blanc, citron, épices), 1 h si possible.", "Saisir le poulet, réserver. Suer oignons, ail, gingembre, concentré.", "Ajouter épices, pulpe, cajou ; mijoter 10 min, mixer, remettre poulet + fromage blanc.", "Servir avec le riz."], "macros_totales": {"kcal": 2534.9, "proteines": 235.7, "glucides": 242.0, "lipides": 66.1, "fibres": 23.5}, "macros_par_portion": {"kcal": 633.7, "proteines": 58.9, "glucides": 60.5, "lipides": 16.5, "fibres": 5.9}}, {"id": "poulet_moutarde_riz", "nom": "Poulet moutarde + riz", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["poulet", "basique", "meal prep"], "ingredients": [{"ingredient_id": "poulet_blanc", "quantite_g": 1000}, {"ingredient_id": "moutarde", "quantite_g": 60}, {"ingredient_id": "creme_liquide_allegee", "quantite_g": 200}, {"ingredient_id": "oignon", "quantite_g": 110}, {"ingredient_id": "ail", "quantite_g": 6}, {"ingredient_id": "riz_basmati", "quantite_g": 320}, {"ingredient_id": "huile_olive", "quantite_g": 10}], "etapes": ["Mixer oignon + ail + moutarde, enrober le poulet, reposer 30 min.", "Saisir le poulet, ajouter la crème allégée, mijoter 10 min. Servir avec le riz."], "macros_totales": {"kcal": 2875.8, "proteines": 265.9, "glucides": 271.7, "lipides": 76.1, "fibres": 7.8}, "macros_par_portion": {"kcal": 719.0, "proteines": 66.5, "glucides": 67.9, "lipides": 19.0, "fibres": 1.9}}, {"id": "poulet_poivrons_paprika", "nom": "Poulet poivrons paprika + riz", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["poulet", "meal prep"], "ingredients": [{"ingredient_id": "poulet_blanc", "quantite_g": 1000}, {"ingredient_id": "poivron_rouge", "quantite_g": 450}, {"ingredient_id": "oignon", "quantite_g": 110}, {"ingredient_id": "pulpe_tomate", "quantite_g": 200}, {"ingredient_id": "paprika_fume", "quantite_g": 8}, {"ingredient_id": "riz_basmati", "quantite_g": 320}, {"ingredient_id": "huile_olive", "quantite_g": 10}, {"ingredient_id": "ail", "quantite_g": 6}], "etapes": ["Saisir le poulet, réserver. Faire fondre poivrons + oignon + ail.", "Ajouter pulpe + paprika fumé, remettre le poulet, mijoter 10 min. Servir avec le riz."], "macros_totales": {"kcal": 2693.2, "proteines": 264.1, "glucides": 296.9, "lipides": 43.1, "fibres": 21.1}, "macros_par_portion": {"kcal": 673.3, "proteines": 66.0, "glucides": 74.2, "lipides": 10.8, "fibres": 5.3}}, {"id": "chili_complet", "nom": "Chili complet (riz inclus)", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["bœuf", "batch", "meal prep"], "ingredients": [{"ingredient_id": "steak_hache_5", "quantite_g": 500}, {"ingredient_id": "haricots_rouges", "quantite_g": 480}, {"ingredient_id": "pois_chiches", "quantite_g": 265}, {"ingredient_id": "mais", "quantite_g": 140}, {"ingredient_id": "poivron_rouge", "quantite_g": 300}, {"ingredient_id": "oignon", "quantite_g": 110}, {"ingredient_id": "ail", "quantite_g": 9}, {"ingredient_id": "pulpe_tomate", "quantite_g": 400}, {"ingredient_id": "paprika_fume", "quantite_g": 6}, {"ingredient_id": "cumin", "quantite_g": 4}, {"ingredient_id": "piment_cayenne", "quantite_g": 1}, {"ingredient_id": "riz_basmati", "quantite_g": 320}, {"ingredient_id": "huile_olive", "quantite_g": 10}, {"ingredient_id": "coriandre", "quantite_g": 5}], "etapes": ["Suer oignon + ail + poivrons, ajouter la viande écrasée, dorer.", "Ajouter épices, pulpe, haricots, pois chiches, maïs ; mijoter 20 min.", "Servir avec le riz, coriandre fraîche."], "macros_totales": {"kcal": 3183.9, "proteines": 198.8, "glucides": 447.3, "lipides": 52.1, "fibres": 72.0}, "macros_par_portion": {"kcal": 796.0, "proteines": 49.7, "glucides": 111.8, "lipides": 13.0, "fibres": 18.0}}, {"id": "bolo_complete", "nom": "Pâtes complètes bolognaise", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["bœuf", "basique", "meal prep"], "ingredients": [{"ingredient_id": "steak_hache_5", "quantite_g": 500}, {"ingredient_id": "pates_completes", "quantite_g": 320}, {"ingredient_id": "pulpe_tomate", "quantite_g": 500}, {"ingredient_id": "oignon", "quantite_g": 110}, {"ingredient_id": "ail", "quantite_g": 6}, {"ingredient_id": "herbes_provence", "quantite_g": 2}, {"ingredient_id": "huile_olive", "quantite_g": 8}], "etapes": ["Suer oignon + ail, dorer la viande, sel, poivre, herbes.", "Ajouter la pulpe + un peu d'eau, mijoter 15 min. Servir sur pâtes complètes."], "macros_totales": {"kcal": 2094.6, "proteines": 155.5, "glucides": 241.6, "lipides": 42.9, "fibres": 35.1}, "macros_par_portion": {"kcal": 523.6, "proteines": 38.9, "glucides": 60.4, "lipides": 10.7, "fibres": 8.8}}, {"id": "carbonara_diete", "nom": "Carbonara diète (pâtes complètes)", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["porc", "basique", "meal prep"], "ingredients": [{"ingredient_id": "pates_completes", "quantite_g": 320}, {"ingredient_id": "allumettes_bacon", "quantite_g": 300}, {"ingredient_id": "creme_liquide_allegee", "quantite_g": 200}, {"ingredient_id": "parmesan", "quantite_g": 60}, {"ingredient_id": "oeuf", "quantite_g": 100}, {"ingredient_id": "oignon", "quantite_g": 80}], "etapes": ["Cuire les pâtes al dente, garder un peu d'eau de cuisson.", "Griller les allumettes de bacon avec l'oignon, sans matière grasse.", "Hors du feu : crème + œufs + parmesan + poivre, lier avec les pâtes et un peu d'eau de cuisson."], "macros_totales": {"kcal": 2179.0, "proteines": 138.1, "glucides": 223.5, "lipides": 75.9, "fibres": 27.0}, "macros_par_portion": {"kcal": 544.8, "proteines": 34.5, "glucides": 55.9, "lipides": 19.0, "fibres": 6.8}}, {"id": "cabillaud_riz_courgettes", "nom": "Cabillaud, riz, courgettes", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["poisson", "léger", "meal prep"], "ingredients": [{"ingredient_id": "cabillaud", "quantite_g": 800}, {"ingredient_id": "riz_basmati", "quantite_g": 320}, {"ingredient_id": "courgette", "quantite_g": 600}, {"ingredient_id": "jus_citron", "quantite_g": 20}, {"ingredient_id": "huile_olive", "quantite_g": 15}, {"ingredient_id": "ail", "quantite_g": 6}], "etapes": ["Poêler les courgettes à l'ail. Cuire le riz.", "Cuire le cabillaud à la poêle ou vapeur, citron, huile d'olive en finition."], "macros_totales": {"kcal": 2025.2, "proteines": 175.6, "glucides": 265.8, "lipides": 25.4, "fibres": 11.4}, "macros_par_portion": {"kcal": 506.3, "proteines": 43.9, "glucides": 66.5, "lipides": 6.3, "fibres": 2.9}}, {"id": "saumon_patate_douce", "nom": "Saumon, patate douce, haricots verts", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["poisson", "meal prep"], "ingredients": [{"ingredient_id": "saumon", "quantite_g": 600}, {"ingredient_id": "patate_douce", "quantite_g": 800}, {"ingredient_id": "haricots_verts", "quantite_g": 500}, {"ingredient_id": "huile_olive", "quantite_g": 10}, {"ingredient_id": "jus_citron", "quantite_g": 15}], "etapes": ["Rôtir la patate douce en cubes au four (200°, 25 min).", "Cuire les haricots verts, snacker le saumon côté peau, citron."], "macros_totales": {"kcal": 2136.3, "proteines": 141.9, "glucides": 178.0, "lipides": 89.8, "fibres": 39.0}, "macros_par_portion": {"kcal": 534.1, "proteines": 35.5, "glucides": 44.5, "lipides": 22.4, "fibres": 9.8}}, {"id": "papillote_saumon_poireaux", "nom": "Papillote saumon, fondue de poireaux, pâtes", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["poisson", "meal prep"], "ingredients": [{"ingredient_id": "saumon", "quantite_g": 600}, {"ingredient_id": "poireau", "quantite_g": 800}, {"ingredient_id": "creme_liquide_allegee", "quantite_g": 150}, {"ingredient_id": "pates_completes", "quantite_g": 240}, {"ingredient_id": "jus_citron", "quantite_g": 15}, {"ingredient_id": "ail", "quantite_g": 6}], "etapes": ["Fondue : suer les poireaux à couvert avec l'ail, ajouter la crème.", "Saumon en papillote (200°, 15 min) avec citron. Servir avec pâtes complètes."], "macros_totales": {"kcal": 2523.1, "proteines": 168.1, "glucides": 194.3, "lipides": 109.0, "fibres": 39.5}, "macros_par_portion": {"kcal": 630.8, "proteines": 42.0, "glucides": 48.6, "lipides": 27.2, "fibres": 9.9}}, {"id": "rougail_allege", "nom": "Rougail saucisse allégé, carottes, riz", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["porc", "batch", "meal prep"], "ingredients": [{"ingredient_id": "saucisse_fumee", "quantite_g": 300}, {"ingredient_id": "knacki", "quantite_g": 200}, {"ingredient_id": "carotte", "quantite_g": 700}, {"ingredient_id": "oignon", "quantite_g": 110}, {"ingredient_id": "ail", "quantite_g": 6}, {"ingredient_id": "pulpe_tomate", "quantite_g": 400}, {"ingredient_id": "paprika_fume", "quantite_g": 4}, {"ingredient_id": "curry", "quantite_g": 4}, {"ingredient_id": "gingembre", "quantite_g": 8}, {"ingredient_id": "jus_citron", "quantite_g": 15}, {"ingredient_id": "riz_basmati", "quantite_g": 320}], "etapes": ["Rondelles de saucisses, suer oignon + ail, ajouter carottes mixées.", "Ajouter pulpe + épices + citron, mijoter 20 min. Servir avec le riz."], "macros_totales": {"kcal": 3093.5, "proteines": 104.2, "glucides": 354.7, "lipides": 136.9, "fibres": 33.6}, "macros_par_portion": {"kcal": 773.4, "proteines": 26.1, "glucides": 88.7, "lipides": 34.2, "fibres": 8.4}}, {"id": "boeuf_chow_mein", "nom": "Bœuf chow mein léger", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["bœuf", "asiatique", "meal prep"], "ingredients": [{"ingredient_id": "basse_cote", "quantite_g": 500}, {"ingredient_id": "nouilles_chinoises", "quantite_g": 240}, {"ingredient_id": "chou_blanc", "quantite_g": 300}, {"ingredient_id": "carotte", "quantite_g": 200}, {"ingredient_id": "oignon", "quantite_g": 110}, {"ingredient_id": "sauce_soja", "quantite_g": 50}, {"ingredient_id": "huile_sesame", "quantite_g": 15}, {"ingredient_id": "ail", "quantite_g": 6}, {"ingredient_id": "gingembre", "quantite_g": 10}], "etapes": ["Mariner le bœuf en lamelles (soja, sésame, ail, gingembre).", "Sauter le bœuf à feu vif, réserver. Sauter chou + carotte + oignon.", "Ajouter nouilles cuites + bœuf + reste de marinade, 2 min à feu vif."], "macros_totales": {"kcal": 2264.8, "proteines": 131.3, "glucides": 213.5, "lipides": 94.8, "fibres": 22.5}, "macros_par_portion": {"kcal": 566.2, "proteines": 32.8, "glucides": 53.4, "lipides": 23.7, "fibres": 5.6}}, {"id": "dahl_lentilles", "nom": "Dahl de lentilles corail + riz", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["végétarien", "batch", "meal prep"], "ingredients": [{"ingredient_id": "lentilles_corail", "quantite_g": 320}, {"ingredient_id": "lait_coco_allege", "quantite_g": 400}, {"ingredient_id": "pulpe_tomate", "quantite_g": 200}, {"ingredient_id": "oignon", "quantite_g": 110}, {"ingredient_id": "ail", "quantite_g": 6}, {"ingredient_id": "curry", "quantite_g": 10}, {"ingredient_id": "curcuma", "quantite_g": 4}, {"ingredient_id": "cumin", "quantite_g": 3}, {"ingredient_id": "riz_basmati", "quantite_g": 240}], "etapes": ["Suer oignon + ail + épices, ajouter lentilles + pulpe + lait de coco + eau.", "Mijoter 20 min en remuant. Servir avec le riz."], "macros_totales": {"kcal": 2573.1, "proteines": 105.4, "glucides": 395.5, "lipides": 51.9, "fibres": 47.8}, "macros_par_portion": {"kcal": 643.3, "proteines": 26.4, "glucides": 98.9, "lipides": 13.0, "fibres": 11.9}}, {"id": "hachis_patate_douce", "nom": "Hachis parmentier patate douce", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["bœuf", "meal prep"], "ingredients": [{"ingredient_id": "steak_hache_5", "quantite_g": 500}, {"ingredient_id": "patate_douce", "quantite_g": 1000}, {"ingredient_id": "oignon", "quantite_g": 110}, {"ingredient_id": "ail", "quantite_g": 6}, {"ingredient_id": "lait_ecreme", "quantite_g": 100}, {"ingredient_id": "emmental_allege", "quantite_g": 60}], "etapes": ["Purée : patate douce cuite à l'eau + lait écrémé.", "Dorer viande + oignon + ail. Monter le hachis, emmental allégé, four 15 min à 200°."], "macros_totales": {"kcal": 1793.8, "proteines": 142.9, "glucides": 206.1, "lipides": 36.6, "fibres": 32.2}, "macros_par_portion": {"kcal": 448.4, "proteines": 35.7, "glucides": 51.5, "lipides": 9.2, "fibres": 8.1}}, {"id": "gratin_poireaux_pdt", "nom": "Gratin poireaux, pommes de terre, bacon", "categorie": "Plat", "portions": 4, "congelable": true, "tags": ["porc", "meal prep"], "ingredients": [{"ingredient_id": "poireau", "quantite_g": 700}, {"ingredient_id": "pomme_de_terre", "quantite_g": 600}, {"ingredient_id": "allumettes_bacon", "quantite_g": 200}, {"ingredient_id": "creme_liquide_allegee", "quantite_g": 200}, {"ingredient_id": "emmental_allege", "quantite_g": 60}, {"ingredient_id": "ail", "quantite_g": 6}], "etapes": ["Précuire les pommes de terre. Suer poireaux + bacon + ail.", "Mélanger avec la crème dans un plat, emmental dessus, four 25 min à 180°."], "macros_totales": {"kcal": 1392.8, "proteines": 83.7, "glucides": 142.3, "lipides": 49.9, "fibres": 28.6}, "macros_par_portion": {"kcal": 348.2, "proteines": 20.9, "glucides": 35.6, "lipides": 12.5, "fibres": 7.2}}, {"id": "steak_pates", "nom": "Steaks hachés + pâtes complètes", "categorie": "Plat", "portions": 1, "congelable": false, "tags": ["bœuf", "basique", "rapide"], "ingredients": [{"ingredient_id": "steak_hache_5", "quantite_g": 250}, {"ingredient_id": "pates_completes", "quantite_g": 80}, {"ingredient_id": "pulpe_tomate", "quantite_g": 100}, {"ingredient_id": "huile_olive", "quantite_g": 3}], "etapes": ["Cuire les pâtes. Poêler les 2 steaks, réchauffer la sauce tomate."], "macros_totales": {"kcal": 681.5, "proteines": 64.3, "glucides": 56.2, "lipides": 17.8, "fibres": 7.7}, "macros_par_portion": {"kcal": 681.5, "proteines": 64.3, "glucides": 56.2, "lipides": 17.8, "fibres": 7.7}}, {"id": "basse_cote_pates", "nom": "Basse côte + pâtes complètes", "categorie": "Plat", "portions": 1, "congelable": false, "tags": ["bœuf", "basique", "rapide"], "ingredients": [{"ingredient_id": "basse_cote", "quantite_g": 200}, {"ingredient_id": "pates_completes", "quantite_g": 80}, {"ingredient_id": "beurre", "quantite_g": 5}], "etapes": ["Saisir la basse côte à feu vif, repos 3 min. Pâtes + noisette de beurre."], "macros_totales": {"kcal": 737.5, "proteines": 48.4, "glucides": 51.2, "lipides": 36.1, "fibres": 6.4}, "macros_par_portion": {"kcal": 737.5, "proteines": 48.4, "glucides": 51.2, "lipides": 36.1, "fibres": 6.4}}, {"id": "entrecote_pdt", "nom": "Entrecôte + pommes de terre", "categorie": "Plat", "portions": 1, "congelable": false, "tags": ["bœuf", "rapide"], "ingredients": [{"ingredient_id": "entrecote", "quantite_g": 250}, {"ingredient_id": "pomme_de_terre", "quantite_g": 350}, {"ingredient_id": "huile_olive", "quantite_g": 5}, {"ingredient_id": "salade_verte", "quantite_g": 50}], "etapes": ["Pommes de terre rôties au four (200°, 30 min) avec un filet d'huile.", "Saisir l'entrecôte, repos 3 min. Salade verte."], "macros_totales": {"kcal": 870.0, "proteines": 55.2, "glucides": 60.2, "lipides": 44.2, "fibres": 7.0}, "macros_par_portion": {"kcal": 870.0, "proteines": 55.2, "glucides": 60.2, "lipides": 44.2, "fibres": 7.0}}, {"id": "omelette_complete", "nom": "Omelette champignons-jambon + pommes de terre", "categorie": "Plat", "portions": 1, "congelable": false, "tags": ["œufs", "rapide"], "ingredients": [{"ingredient_id": "oeuf", "quantite_g": 150}, {"ingredient_id": "champignon", "quantite_g": 150}, {"ingredient_id": "jambon_blanc", "quantite_g": 50}, {"ingredient_id": "pomme_de_terre", "quantite_g": 250}, {"ingredient_id": "huile_olive", "quantite_g": 5}], "etapes": ["Sauter pommes de terre précuites + champignons.", "Verser les œufs battus + jambon, cuire à feu doux."], "macros_totales": {"kcal": 547.5, "proteines": 37.8, "glucides": 47.0, "lipides": 21.9, "fibres": 6.8}, "macros_par_portion": {"kcal": 547.5, "proteines": 37.8, "glucides": 47.0, "lipides": 21.9, "fibres": 6.8}}, {"id": "wrap_poulet", "nom": "Wrap poulet crudités", "categorie": "Plat", "portions": 1, "congelable": false, "tags": ["poulet", "rapide", "froid"], "ingredients": [{"ingredient_id": "wrap_complet", "quantite_g": 60}, {"ingredient_id": "poulet_blanc", "quantite_g": 125}, {"ingredient_id": "salade_verte", "quantite_g": 30}, {"ingredient_id": "tomate", "quantite_g": 50}, {"ingredient_id": "fromage_frais_allege", "quantite_g": 30}], "etapes": ["Poêler le poulet en lamelles (ou utiliser un reste).", "Tartiner le wrap de fromage frais, garnir, rouler serré."], "macros_totales": {"kcal": 389.8, "proteines": 37.4, "glucides": 33.1, "lipides": 9.8, "fibres": 4.6}, "macros_par_portion": {"kcal": 389.8, "proteines": 37.4, "glucides": 33.1, "lipides": 9.8, "fibres": 4.6}}, {"id": "salade_thon_quinoa", "nom": "Salade quinoa-thon", "categorie": "Plat", "portions": 1, "congelable": false, "tags": ["poisson", "froid", "rapide"], "ingredients": [{"ingredient_id": "quinoa", "quantite_g": 70}, {"ingredient_id": "thon_boite", "quantite_g": 100}, {"ingredient_id": "tomate", "quantite_g": 120}, {"ingredient_id": "mais", "quantite_g": 60}, {"ingredient_id": "oignon_rouge", "quantite_g": 25}, {"ingredient_id": "huile_olive", "quantite_g": 7}, {"ingredient_id": "jus_citron", "quantite_g": 10}], "etapes": ["Cuire le quinoa, refroidir.", "Mélanger thon, tomate, maïs, oignon rouge ; assaisonner huile + citron."], "macros_totales": {"kcal": 521.4, "proteines": 38.0, "glucides": 58.4, "lipides": 13.3, "fibres": 8.6}, "macros_par_portion": {"kcal": 521.4, "proteines": 38.0, "glucides": 58.4, "lipides": 13.3, "fibres": 8.6}}, {"id": "bowl_avoine_fdb", "nom": "Bowl avoine, fromage blanc, fruits rouges", "categorie": "Petit-déjeuner", "portions": 1, "congelable": false, "tags": ["petit-déj", "rapide"], "ingredients": [{"ingredient_id": "flocons_avoine", "quantite_g": 60}, {"ingredient_id": "fromage_blanc_0", "quantite_g": 200}, {"ingredient_id": "fruits_rouges", "quantite_g": 100}, {"ingredient_id": "miel", "quantite_g": 10}, {"ingredient_id": "amandes", "quantite_g": 10}], "etapes": ["Mélanger fromage blanc + flocons, garnir fruits rouges, miel, amandes."], "macros_totales": {"kcal": 455.0, "proteines": 26.9, "glucides": 61.7, "lipides": 10.2, "fibres": 10.6}, "macros_par_portion": {"kcal": 455.0, "proteines": 26.9, "glucides": 61.7, "lipides": 10.2, "fibres": 10.6}}, {"id": "pancakes_banane", "nom": "Pancakes banane-avoine", "categorie": "Petit-déjeuner", "portions": 1, "congelable": true, "tags": ["petit-déj", "goûter"], "ingredients": [{"ingredient_id": "oeuf", "quantite_g": 100}, {"ingredient_id": "flocons_avoine", "quantite_g": 60}, {"ingredient_id": "banane", "quantite_g": 120}, {"ingredient_id": "fromage_blanc_0", "quantite_g": 100}], "etapes": ["Mixer tous les ingrédients en pâte lisse.", "Cuire de petites louches à la poêle antiadhésive, 1-2 min par face. Se congèle bien."], "macros_totales": {"kcal": 518.0, "proteines": 29.8, "glucides": 64.7, "lipides": 14.6, "fibres": 7.4}, "macros_par_portion": {"kcal": 518.0, "proteines": 29.8, "glucides": 64.7, "lipides": 14.6, "fibres": 7.4}}, {"id": "gaufres_proteinees", "nom": "Gaufres protéinées avoine", "categorie": "Goûter", "portions": 2, "congelable": true, "tags": ["goûter", "petit-déj"], "ingredients": [{"ingredient_id": "flocons_avoine", "quantite_g": 120}, {"ingredient_id": "oeuf", "quantite_g": 150}, {"ingredient_id": "fromage_blanc_0", "quantite_g": 200}, {"ingredient_id": "levure_chimique", "quantite_g": 8}, {"ingredient_id": "miel", "quantite_g": 15}], "etapes": ["Mixer flocons en farine, mélanger avec le reste.", "Cuire au gaufrier 3-4 min. Se congèlent et passent au grille-pain."], "macros_totales": {"kcal": 804.5, "proteines": 50.7, "glucides": 96.2, "lipides": 23.5, "fibres": 10.8}, "macros_par_portion": {"kcal": 402.2, "proteines": 25.4, "glucides": 48.1, "lipides": 11.8, "fibres": 5.4}}, {"id": "overnight_oats", "nom": "Overnight oats skyr-pomme-cannelle", "categorie": "Petit-déjeuner", "portions": 1, "congelable": false, "tags": ["petit-déj", "froid"], "ingredients": [{"ingredient_id": "flocons_avoine", "quantite_g": 50}, {"ingredient_id": "skyr", "quantite_g": 150}, {"ingredient_id": "lait_ecreme", "quantite_g": 100}, {"ingredient_id": "pomme", "quantite_g": 100}, {"ingredient_id": "cannelle", "quantite_g": 2}, {"ingredient_id": "miel", "quantite_g": 10}], "etapes": ["La veille : mélanger flocons + skyr + lait dans un bocal.", "Le matin : pomme en dés, cannelle, miel."], "macros_totales": {"kcal": 394.5, "proteines": 25.3, "glucides": 62.1, "lipides": 4.3, "fibres": 7.8}, "macros_par_portion": {"kcal": 394.5, "proteines": 25.3, "glucides": 62.1, "lipides": 4.3, "fibres": 7.8}}, {"id": "porridge_choco", "nom": "Porridge choco-banane", "categorie": "Petit-déjeuner", "portions": 1, "congelable": false, "tags": ["petit-déj"], "ingredients": [{"ingredient_id": "flocons_avoine", "quantite_g": 60}, {"ingredient_id": "lait_demi", "quantite_g": 200}, {"ingredient_id": "banane", "quantite_g": 60}, {"ingredient_id": "chocolat_noir", "quantite_g": 10}], "etapes": ["Cuire flocons + lait 3-4 min en remuant.", "Ajouter banane en rondelles et chocolat."], "macros_totales": {"kcal": 423.0, "proteines": 15.7, "glucides": 60.6, "lipides": 11.6, "fibres": 7.4}, "macros_par_portion": {"kcal": 423.0, "proteines": 15.7, "glucides": 60.6, "lipides": 11.6, "fibres": 7.4}}, {"id": "cookies_avoine", "nom": "Cookies avoine-banane (congelables)", "categorie": "Goûter", "portions": 3, "congelable": true, "tags": ["goûter", "batch"], "ingredients": [{"ingredient_id": "flocons_avoine", "quantite_g": 150}, {"ingredient_id": "banane", "quantite_g": 240}, {"ingredient_id": "oeuf", "quantite_g": 50}, {"ingredient_id": "chocolat_noir", "quantite_g": 30}, {"ingredient_id": "beurre_cacahuete", "quantite_g": 30}], "etapes": ["Écraser les bananes, mélanger tout, former 6 cookies.", "Four 180°, 12-15 min. 2 cookies par portion, se congèlent."], "macros_totales": {"kcal": 1187.5, "proteines": 38.7, "glucides": 150.9, "lipides": 43.1, "fibres": 22.4}, "macros_par_portion": {"kcal": 395.8, "proteines": 12.9, "glucides": 50.3, "lipides": 14.4, "fibres": 7.5}}, {"id": "collation_skyr_bc", "nom": "Collation 22h : skyr + beurre de cacahuète", "categorie": "Collation", "portions": 1, "congelable": false, "tags": ["collation", "soir"], "ingredients": [{"ingredient_id": "skyr", "quantite_g": 150}, {"ingredient_id": "beurre_cacahuete", "quantite_g": 15}], "etapes": ["Mélanger, c'est prêt."], "macros_totales": {"kcal": 175.5, "proteines": 18.9, "glucides": 7.8, "lipides": 7.8, "fibres": 0.9}, "macros_par_portion": {"kcal": 175.5, "proteines": 18.9, "glucides": 7.8, "lipides": 7.8, "fibres": 0.9}}, {"id": "fromage_blanc_dessert", "nom": "Dessert : fromage blanc 0% (200 g)", "categorie": "Collation", "portions": 1, "congelable": false, "tags": ["dessert", "midi", "soir"], "ingredients": [{"ingredient_id": "fromage_blanc_0", "quantite_g": 200}], "etapes": ["200 g de fromage blanc 0% en dessert du midi et du soir."], "macros_totales": {"kcal": 90.0, "proteines": 16.0, "glucides": 8.0, "lipides": 0.4, "fibres": 0.0}, "macros_par_portion": {"kcal": 90.0, "proteines": 16.0, "glucides": 8.0, "lipides": 0.4, "fibres": 0.0}}]};
+const DEFAULT_DATA = {
+  "ingredients": [
+    {
+      "id": "poulet_blanc",
+      "nom": "Blanc de poulet",
+      "categorie": "Viandes & poissons",
+      "rayon": "Boucherie / Volaille",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 121,
+        "proteines": 23,
+        "glucides": 0,
+        "lipides": 2.7,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "steak_hache_5",
+      "nom": "Steak haché bœuf 5% MG",
+      "categorie": "Viandes & poissons",
+      "rayon": "Boucherie / Volaille",
+      "poids_unitaire_g": 125,
+      "macros_pour_100g": {
+        "kcal": 137,
+        "proteines": 21,
+        "glucides": 0,
+        "lipides": 5,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "basse_cote",
+      "nom": "Basse côte de bœuf",
+      "categorie": "Viandes & poissons",
+      "rayon": "Boucherie / Volaille",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 210,
+        "proteines": 19,
+        "glucides": 0,
+        "lipides": 15,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "entrecote",
+      "nom": "Entrecôte de bœuf",
+      "categorie": "Viandes & poissons",
+      "rayon": "Boucherie / Volaille",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 215,
+        "proteines": 19,
+        "glucides": 0,
+        "lipides": 15.5,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "cabillaud",
+      "nom": "Cabillaud / poisson blanc",
+      "categorie": "Viandes & poissons",
+      "rayon": "Poissonnerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 82,
+        "proteines": 18,
+        "glucides": 0,
+        "lipides": 0.7,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "saumon",
+      "nom": "Saumon frais",
+      "categorie": "Viandes & poissons",
+      "rayon": "Poissonnerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 200,
+        "proteines": 20,
+        "glucides": 0,
+        "lipides": 13,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "thon_boite",
+      "nom": "Thon au naturel (égoutté)",
+      "categorie": "Viandes & poissons",
+      "rayon": "Conserves",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 110,
+        "proteines": 25,
+        "glucides": 0,
+        "lipides": 1,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "jambon_blanc",
+      "nom": "Jambon blanc découenné",
+      "categorie": "Viandes & poissons",
+      "rayon": "Charcuterie",
+      "poids_unitaire_g": 45,
+      "macros_pour_100g": {
+        "kcal": 110,
+        "proteines": 20,
+        "glucides": 1,
+        "lipides": 3,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "allumettes_bacon",
+      "nom": "Allumettes de bacon",
+      "categorie": "Viandes & poissons",
+      "rayon": "Charcuterie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 110,
+        "proteines": 19,
+        "glucides": 1,
+        "lipides": 3.5,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "lardons_fumes",
+      "nom": "Lardons fumés",
+      "categorie": "Viandes & poissons",
+      "rayon": "Charcuterie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 270,
+        "proteines": 14,
+        "glucides": 1,
+        "lipides": 23,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "saucisse_fumee",
+      "nom": "Saucisse fumée",
+      "categorie": "Viandes & poissons",
+      "rayon": "Charcuterie",
+      "poids_unitaire_g": 150,
+      "macros_pour_100g": {
+        "kcal": 300,
+        "proteines": 14,
+        "glucides": 2,
+        "lipides": 26,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "knacki",
+      "nom": "Saucisse type knacki",
+      "categorie": "Viandes & poissons",
+      "rayon": "Charcuterie",
+      "poids_unitaire_g": 35,
+      "macros_pour_100g": {
+        "kcal": 290,
+        "proteines": 12,
+        "glucides": 3,
+        "lipides": 26,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "oeuf",
+      "nom": "Œuf entier",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": 50,
+      "macros_pour_100g": {
+        "kcal": 143,
+        "proteines": 12.7,
+        "glucides": 0.7,
+        "lipides": 9.8,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "riz_basmati",
+      "nom": "Riz basmati",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 350,
+        "proteines": 7.5,
+        "glucides": 78,
+        "lipides": 0.9,
+        "fibres": 1.4
+      }
+    },
+    {
+      "id": "riz_noir",
+      "nom": "Riz noir",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 350,
+        "proteines": 9,
+        "glucides": 72,
+        "lipides": 3,
+        "fibres": 4.5
+      }
+    },
+    {
+      "id": "pates_completes",
+      "nom": "Pâtes blé complet",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 350,
+        "proteines": 13,
+        "glucides": 64,
+        "lipides": 2.5,
+        "fibres": 8
+      }
+    },
+    {
+      "id": "pates_blanches",
+      "nom": "Pâtes blanches",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 360,
+        "proteines": 12,
+        "glucides": 70,
+        "lipides": 1.5,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "nouilles_chinoises",
+      "nom": "Nouilles chinoises",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 350,
+        "proteines": 11,
+        "glucides": 71,
+        "lipides": 1.5,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "semoule_complete",
+      "nom": "Semoule complète",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 350,
+        "proteines": 12.5,
+        "glucides": 68,
+        "lipides": 2,
+        "fibres": 6
+      }
+    },
+    {
+      "id": "pomme_de_terre",
+      "nom": "Pomme de terre",
+      "categorie": "Féculents",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 150,
+      "macros_pour_100g": {
+        "kcal": 80,
+        "proteines": 2,
+        "glucides": 17,
+        "lipides": 0.1,
+        "fibres": 1.8
+      }
+    },
+    {
+      "id": "patate_douce",
+      "nom": "Patate douce",
+      "categorie": "Féculents",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 250,
+      "macros_pour_100g": {
+        "kcal": 86,
+        "proteines": 1.6,
+        "glucides": 19,
+        "lipides": 0.1,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "lentilles_corail",
+      "nom": "Lentilles corail",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 350,
+        "proteines": 24,
+        "glucides": 52,
+        "lipides": 2,
+        "fibres": 11
+      }
+    },
+    {
+      "id": "quinoa",
+      "nom": "Quinoa",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 368,
+        "proteines": 14,
+        "glucides": 60,
+        "lipides": 6,
+        "fibres": 7
+      }
+    },
+    {
+      "id": "flocons_avoine",
+      "nom": "Flocons d'avoine",
+      "categorie": "Féculents",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 370,
+        "proteines": 13,
+        "glucides": 60,
+        "lipides": 7,
+        "fibres": 9
+      }
+    },
+    {
+      "id": "farine_complete",
+      "nom": "Farine de blé complète",
+      "categorie": "Féculents",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 340,
+        "proteines": 11,
+        "glucides": 64,
+        "lipides": 2,
+        "fibres": 8
+      }
+    },
+    {
+      "id": "farine_ble",
+      "nom": "Farine de blé T55",
+      "categorie": "Féculents",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 350,
+        "proteines": 10,
+        "glucides": 72,
+        "lipides": 1,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "pain_complet",
+      "nom": "Pain complet",
+      "categorie": "Féculents",
+      "rayon": "Boulangerie",
+      "poids_unitaire_g": 30,
+      "macros_pour_100g": {
+        "kcal": 250,
+        "proteines": 9,
+        "glucides": 43,
+        "lipides": 2.5,
+        "fibres": 7
+      }
+    },
+    {
+      "id": "wrap_complet",
+      "nom": "Tortilla / wrap complet",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": 60,
+      "macros_pour_100g": {
+        "kcal": 300,
+        "proteines": 9,
+        "glucides": 50,
+        "lipides": 5,
+        "fibres": 6
+      }
+    },
+    {
+      "id": "feuilles_lasagne",
+      "nom": "Feuilles de lasagnes",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": 17,
+      "macros_pour_100g": {
+        "kcal": 360,
+        "proteines": 12,
+        "glucides": 71,
+        "lipides": 2,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "brocolis",
+      "nom": "Brocolis",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 34,
+        "proteines": 2.8,
+        "glucides": 4,
+        "lipides": 0.4,
+        "fibres": 2.6
+      }
+    },
+    {
+      "id": "carotte",
+      "nom": "Carotte",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 125,
+      "macros_pour_100g": {
+        "kcal": 40,
+        "proteines": 0.8,
+        "glucides": 8,
+        "lipides": 0.2,
+        "fibres": 2.7
+      }
+    },
+    {
+      "id": "chou_blanc",
+      "nom": "Chou blanc",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 25,
+        "proteines": 1.3,
+        "glucides": 4,
+        "lipides": 0.1,
+        "fibres": 2.5
+      }
+    },
+    {
+      "id": "salade_verte",
+      "nom": "Salade verte",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 15,
+        "proteines": 1.4,
+        "glucides": 1.5,
+        "lipides": 0.2,
+        "fibres": 1.3
+      }
+    },
+    {
+      "id": "aubergine",
+      "nom": "Aubergine",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 300,
+      "macros_pour_100g": {
+        "kcal": 25,
+        "proteines": 1,
+        "glucides": 4,
+        "lipides": 0.2,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "courgette",
+      "nom": "Courgette",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 250,
+      "macros_pour_100g": {
+        "kcal": 17,
+        "proteines": 1.2,
+        "glucides": 2.2,
+        "lipides": 0.3,
+        "fibres": 1.1
+      }
+    },
+    {
+      "id": "poivron_rouge",
+      "nom": "Poivron rouge",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 150,
+      "macros_pour_100g": {
+        "kcal": 30,
+        "proteines": 1,
+        "glucides": 5,
+        "lipides": 0.3,
+        "fibres": 2
+      }
+    },
+    {
+      "id": "tomate",
+      "nom": "Tomate",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 120,
+      "macros_pour_100g": {
+        "kcal": 18,
+        "proteines": 0.9,
+        "glucides": 3,
+        "lipides": 0.2,
+        "fibres": 1.2
+      }
+    },
+    {
+      "id": "poireau",
+      "nom": "Poireau",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 200,
+      "macros_pour_100g": {
+        "kcal": 29,
+        "proteines": 1.5,
+        "glucides": 4,
+        "lipides": 0.3,
+        "fibres": 2.5
+      }
+    },
+    {
+      "id": "champignon",
+      "nom": "Champignons de Paris",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 22,
+        "proteines": 2.5,
+        "glucides": 2,
+        "lipides": 0.3,
+        "fibres": 1.5
+      }
+    },
+    {
+      "id": "haricots_verts",
+      "nom": "Haricots verts",
+      "categorie": "Fruits & légumes",
+      "rayon": "Surgelés",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 31,
+        "proteines": 1.8,
+        "glucides": 5,
+        "lipides": 0.2,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "epinards",
+      "nom": "Épinards",
+      "categorie": "Fruits & légumes",
+      "rayon": "Surgelés",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 23,
+        "proteines": 2.7,
+        "glucides": 1.5,
+        "lipides": 0.4,
+        "fibres": 2.2
+      }
+    },
+    {
+      "id": "oignon",
+      "nom": "Oignon jaune",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 110,
+      "macros_pour_100g": {
+        "kcal": 40,
+        "proteines": 1.2,
+        "glucides": 8,
+        "lipides": 0.2,
+        "fibres": 1.7
+      }
+    },
+    {
+      "id": "oignon_rouge",
+      "nom": "Oignon rouge",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 110,
+      "macros_pour_100g": {
+        "kcal": 40,
+        "proteines": 1.2,
+        "glucides": 8,
+        "lipides": 0.2,
+        "fibres": 1.7
+      }
+    },
+    {
+      "id": "ail",
+      "nom": "Ail",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 3,
+      "macros_pour_100g": {
+        "kcal": 130,
+        "proteines": 6,
+        "glucides": 28,
+        "lipides": 0.5,
+        "fibres": 5
+      }
+    },
+    {
+      "id": "gingembre",
+      "nom": "Gingembre frais",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 80,
+        "proteines": 1.8,
+        "glucides": 16,
+        "lipides": 0.8,
+        "fibres": 2
+      }
+    },
+    {
+      "id": "jus_citron",
+      "nom": "Jus de citron",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 22,
+        "proteines": 0.4,
+        "glucides": 6.5,
+        "lipides": 0.2,
+        "fibres": 0.1
+      }
+    },
+    {
+      "id": "banane",
+      "nom": "Banane",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 120,
+      "macros_pour_100g": {
+        "kcal": 90,
+        "proteines": 1.1,
+        "glucides": 20,
+        "lipides": 0.3,
+        "fibres": 1.7
+      }
+    },
+    {
+      "id": "pomme",
+      "nom": "Pomme",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": 150,
+      "macros_pour_100g": {
+        "kcal": 52,
+        "proteines": 0.3,
+        "glucides": 12,
+        "lipides": 0.2,
+        "fibres": 2.4
+      }
+    },
+    {
+      "id": "fruits_rouges",
+      "nom": "Fruits rouges",
+      "categorie": "Fruits & légumes",
+      "rayon": "Surgelés",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 50,
+        "proteines": 1,
+        "glucides": 9,
+        "lipides": 0.3,
+        "fibres": 4
+      }
+    },
+    {
+      "id": "coriandre",
+      "nom": "Coriandre fraîche",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 25,
+        "proteines": 2,
+        "glucides": 4,
+        "lipides": 0.5,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "persil",
+      "nom": "Persil frais",
+      "categorie": "Fruits & légumes",
+      "rayon": "Fruits & légumes",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 36,
+        "proteines": 3,
+        "glucides": 6,
+        "lipides": 0.8,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "fromage_blanc_0",
+      "nom": "Fromage blanc 0%",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 45,
+        "proteines": 8,
+        "glucides": 4,
+        "lipides": 0.2,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "skyr",
+      "nom": "Skyr nature",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 57,
+        "proteines": 10,
+        "glucides": 4,
+        "lipides": 0.2,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "fromage_blanc_3",
+      "nom": "Fromage blanc 3% MG",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 75,
+        "proteines": 7.5,
+        "glucides": 4,
+        "lipides": 3.4,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "lait_ecreme",
+      "nom": "Lait écrémé",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 35,
+        "proteines": 3.4,
+        "glucides": 5,
+        "lipides": 0.2,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "lait_demi",
+      "nom": "Lait demi-écrémé",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 46,
+        "proteines": 3.2,
+        "glucides": 4.8,
+        "lipides": 1.6,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "creme_liquide_allegee",
+      "nom": "Crème liquide allégée 15%",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 160,
+        "proteines": 3,
+        "glucides": 4,
+        "lipides": 15,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "parmesan",
+      "nom": "Parmesan râpé",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 390,
+        "proteines": 33,
+        "glucides": 1,
+        "lipides": 29,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "mozzarella_light",
+      "nom": "Mozzarella light",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": 125,
+      "macros_pour_100g": {
+        "kcal": 163,
+        "proteines": 20,
+        "glucides": 2,
+        "lipides": 8.5,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "emmental_allege",
+      "nom": "Emmental râpé allégé",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 270,
+        "proteines": 28,
+        "glucides": 1,
+        "lipides": 17,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "fromage_frais_allege",
+      "nom": "Fromage frais allégé",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 150,
+        "proteines": 8,
+        "glucides": 4,
+        "lipides": 11,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "beurre",
+      "nom": "Beurre",
+      "categorie": "Crémerie",
+      "rayon": "Crémerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 750,
+        "proteines": 0.7,
+        "glucides": 0.7,
+        "lipides": 83,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "pulpe_tomate",
+      "nom": "Pulpe / sauce tomate nature",
+      "categorie": "Sauces & condiments",
+      "rayon": "Conserves",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 32,
+        "proteines": 1.4,
+        "glucides": 5,
+        "lipides": 0.3,
+        "fibres": 1.3
+      }
+    },
+    {
+      "id": "concentre_tomate",
+      "nom": "Concentré de tomate",
+      "categorie": "Sauces & condiments",
+      "rayon": "Conserves",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 80,
+        "proteines": 4.5,
+        "glucides": 14,
+        "lipides": 0.5,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "lait_coco_allege",
+      "nom": "Lait de coco allégé",
+      "categorie": "Sauces & condiments",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 110,
+        "proteines": 1,
+        "glucides": 3,
+        "lipides": 10,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "beurre_cacahuete",
+      "nom": "Beurre de cacahuète",
+      "categorie": "Sauces & condiments",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 600,
+        "proteines": 26,
+        "glucides": 12,
+        "lipides": 50,
+        "fibres": 6
+      }
+    },
+    {
+      "id": "miel",
+      "nom": "Miel",
+      "categorie": "Sauces & condiments",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 320,
+        "proteines": 0.3,
+        "glucides": 80,
+        "lipides": 0,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "moutarde",
+      "nom": "Moutarde",
+      "categorie": "Sauces & condiments",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 140,
+        "proteines": 7,
+        "glucides": 6,
+        "lipides": 10,
+        "fibres": 2
+      }
+    },
+    {
+      "id": "sauce_soja",
+      "nom": "Sauce soja (sel réduit)",
+      "categorie": "Sauces & condiments",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 50,
+        "proteines": 5,
+        "glucides": 6,
+        "lipides": 0.3,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "haricots_rouges",
+      "nom": "Haricots rouges (égouttés)",
+      "categorie": "Conserves",
+      "rayon": "Conserves",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 110,
+        "proteines": 7.8,
+        "glucides": 16,
+        "lipides": 0.6,
+        "fibres": 7
+      }
+    },
+    {
+      "id": "pois_chiches",
+      "nom": "Pois chiches (égouttés)",
+      "categorie": "Conserves",
+      "rayon": "Conserves",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 120,
+        "proteines": 6,
+        "glucides": 17,
+        "lipides": 2,
+        "fibres": 5
+      }
+    },
+    {
+      "id": "mais",
+      "nom": "Maïs (égoutté)",
+      "categorie": "Conserves",
+      "rayon": "Conserves",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 95,
+        "proteines": 3,
+        "glucides": 17,
+        "lipides": 1.3,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "noix_cajou",
+      "nom": "Noix de cajou",
+      "categorie": "Épicerie",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 580,
+        "proteines": 18,
+        "glucides": 30,
+        "lipides": 44,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "amandes",
+      "nom": "Amandes",
+      "categorie": "Épicerie",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 610,
+        "proteines": 21,
+        "glucides": 7,
+        "lipides": 53,
+        "fibres": 12
+      }
+    },
+    {
+      "id": "chocolat_noir",
+      "nom": "Chocolat noir 70% / pépites",
+      "categorie": "Épicerie",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 550,
+        "proteines": 8,
+        "glucides": 30,
+        "lipides": 40,
+        "fibres": 10
+      }
+    },
+    {
+      "id": "bouillon_cube",
+      "nom": "Cube de bouillon",
+      "categorie": "Épicerie",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": 10,
+      "macros_pour_100g": {
+        "kcal": 200,
+        "proteines": 10,
+        "glucides": 20,
+        "lipides": 10,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "levure_chimique",
+      "nom": "Levure chimique",
+      "categorie": "Épicerie",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": 10,
+      "macros_pour_100g": {
+        "kcal": 100,
+        "proteines": 0,
+        "glucides": 40,
+        "lipides": 0,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "whey",
+      "nom": "Whey protéine (poudre)",
+      "categorie": "Épicerie",
+      "rayon": "Nutrition sportive",
+      "poids_unitaire_g": 30,
+      "macros_pour_100g": {
+        "kcal": 380,
+        "proteines": 78,
+        "glucides": 6,
+        "lipides": 5,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "huile_olive",
+      "nom": "Huile d'olive",
+      "categorie": "Matières grasses",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 900,
+        "proteines": 0,
+        "glucides": 0,
+        "lipides": 100,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "huile_sesame",
+      "nom": "Huile de sésame",
+      "categorie": "Matières grasses",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 900,
+        "proteines": 0,
+        "glucides": 0,
+        "lipides": 100,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "paprika_fume",
+      "nom": "Paprika fumé",
+      "categorie": "Épices",
+      "rayon": "Épices",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 280,
+        "proteines": 14,
+        "glucides": 54,
+        "lipides": 13,
+        "fibres": 35
+      }
+    },
+    {
+      "id": "curry",
+      "nom": "Curry en poudre",
+      "categorie": "Épices",
+      "rayon": "Épices",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 320,
+        "proteines": 13,
+        "glucides": 55,
+        "lipides": 14,
+        "fibres": 33
+      }
+    },
+    {
+      "id": "curcuma",
+      "nom": "Curcuma",
+      "categorie": "Épices",
+      "rayon": "Épices",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 350,
+        "proteines": 8,
+        "glucides": 65,
+        "lipides": 10,
+        "fibres": 21
+      }
+    },
+    {
+      "id": "cumin",
+      "nom": "Cumin",
+      "categorie": "Épices",
+      "rayon": "Épices",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 375,
+        "proteines": 18,
+        "glucides": 44,
+        "lipides": 22,
+        "fibres": 10
+      }
+    },
+    {
+      "id": "garam_masala",
+      "nom": "Garam masala",
+      "categorie": "Épices",
+      "rayon": "Épices",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 380,
+        "proteines": 15,
+        "glucides": 45,
+        "lipides": 15,
+        "fibres": 25
+      }
+    },
+    {
+      "id": "ras_el_hanout",
+      "nom": "Ras el hanout",
+      "categorie": "Épices",
+      "rayon": "Épices",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 300,
+        "proteines": 12,
+        "glucides": 50,
+        "lipides": 10,
+        "fibres": 25
+      }
+    },
+    {
+      "id": "herbes_provence",
+      "nom": "Herbes de Provence",
+      "categorie": "Épices",
+      "rayon": "Épices",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 290,
+        "proteines": 9,
+        "glucides": 64,
+        "lipides": 7,
+        "fibres": 43
+      }
+    },
+    {
+      "id": "piment_cayenne",
+      "nom": "Piment de Cayenne",
+      "categorie": "Épices",
+      "rayon": "Épices",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 320,
+        "proteines": 12,
+        "glucides": 57,
+        "lipides": 17,
+        "fibres": 27
+      }
+    },
+    {
+      "id": "ail_poudre",
+      "nom": "Ail en poudre",
+      "categorie": "Épices",
+      "rayon": "Épices",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 330,
+        "proteines": 16,
+        "glucides": 70,
+        "lipides": 1,
+        "fibres": 9
+      }
+    },
+    {
+      "id": "cannelle",
+      "nom": "Cannelle",
+      "categorie": "Épices",
+      "rayon": "Épices",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 250,
+        "proteines": 4,
+        "glucides": 55,
+        "lipides": 3,
+        "fibres": 43
+      }
+    },
+    {
+      "id": "frites_carrefour",
+      "nom": "Frites surgelées standard Carrefour",
+      "categorie": "Féculents",
+      "rayon": "Surgelés",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 160,
+        "proteines": 2.8,
+        "glucides": 25,
+        "lipides": 5,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "bonbons",
+      "nom": "Bonbons gélifiés",
+      "categorie": "Épicerie",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 340,
+        "proteines": 5,
+        "glucides": 80,
+        "lipides": 0.2,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "chapelure",
+      "nom": "Chapelure",
+      "categorie": "Féculents",
+      "rayon": "Épicerie salée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 370,
+        "proteines": 12,
+        "glucides": 72,
+        "lipides": 3,
+        "fibres": 4
+      }
+    },
+    {
+      "id": "cafe",
+      "nom": "Café (infusé, sans sucre)",
+      "categorie": "Épicerie",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 2,
+        "proteines": 0.1,
+        "glucides": 0,
+        "lipides": 0,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "sucre_blanc",
+      "nom": "Sucre blanc",
+      "categorie": "Épicerie",
+      "rayon": "Épicerie sucrée",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 400,
+        "proteines": 0,
+        "glucides": 100,
+        "lipides": 0,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "pain_blanc",
+      "nom": "Pain blanc / baguette",
+      "categorie": "Féculents",
+      "rayon": "Boulangerie",
+      "poids_unitaire_g": null,
+      "macros_pour_100g": {
+        "kcal": 270,
+        "proteines": 9,
+        "glucides": 55,
+        "lipides": 1,
+        "fibres": 3
+      }
+    }
+  ],
+  "recettes": [
+    {
+      "id": "poulet_riz_brocolis",
+      "nom": "Poulet, riz, brocolis",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "poulet",
+        "basique",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "poulet_blanc",
+          "quantite_g": 1000
+        },
+        {
+          "ingredient_id": "riz_basmati",
+          "quantite_g": 500
+        },
+        {
+          "ingredient_id": "brocolis",
+          "quantite_g": 600
+        },
+        {
+          "ingredient_id": "sauce_soja",
+          "quantite_g": 30
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 20
+        },
+        {
+          "ingredient_id": "ail_poudre",
+          "quantite_g": 4
+        }
+      ],
+      "etapes": [
+        "Cuire le riz. Cuire les brocolis vapeur 8-10 min (encore croquants).",
+        "Saisir le poulet en cubes à l'huile d'olive, déglacer à la sauce soja, ail en poudre.",
+        "Répartir en 4 tups : 250 g poulet, 80 g riz (cru), 150 g brocolis."
+      ],
+      "macros_totales": {
+        "kcal": 2742.2,
+        "proteines": 272.9,
+        "glucides": 278.2,
+        "lipides": 52.4,
+        "fibres": 20.4
+      },
+      "macros_par_portion": {
+        "kcal": 685.5,
+        "proteines": 68.2,
+        "glucides": 69.5,
+        "lipides": 13.1,
+        "fibres": 5.1
+      }
+    },
+    {
+      "id": "poulet_coco_curry",
+      "nom": "Poulet coco curry + riz",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "poulet",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "poulet_blanc",
+          "quantite_g": 1000
+        },
+        {
+          "ingredient_id": "lait_coco_allege",
+          "quantite_g": 400
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 110
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 9
+        },
+        {
+          "ingredient_id": "curry",
+          "quantite_g": 12
+        },
+        {
+          "ingredient_id": "curcuma",
+          "quantite_g": 5
+        },
+        {
+          "ingredient_id": "jus_citron",
+          "quantite_g": 15
+        },
+        {
+          "ingredient_id": "riz_basmati",
+          "quantite_g": 500
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 10
+        }
+      ],
+      "etapes": [
+        "Mariner le poulet en dés avec curry, curcuma, citron.",
+        "Suer oignon + ail, saisir le poulet, ajouter le lait de coco allégé, mijoter 15 min.",
+        "Servir avec le riz (80 g cru / portion)."
+      ],
+      "macros_totales": {
+        "kcal": 2974.9,
+        "proteines": 261.9,
+        "glucides": 283.7,
+        "lipides": 82.4,
+        "fibres": 11.8
+      },
+      "macros_par_portion": {
+        "kcal": 743.7,
+        "proteines": 65.5,
+        "glucides": 70.9,
+        "lipides": 20.6,
+        "fibres": 3
+      }
+    },
+    {
+      "id": "poulet_beurre_cacahuete",
+      "nom": "Poulet sauce cacahuète + riz",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "poulet",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "poulet_blanc",
+          "quantite_g": 1000
+        },
+        {
+          "ingredient_id": "beurre_cacahuete",
+          "quantite_g": 80
+        },
+        {
+          "ingredient_id": "lait_coco_allege",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "sauce_soja",
+          "quantite_g": 40
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 9
+        },
+        {
+          "ingredient_id": "gingembre",
+          "quantite_g": 10
+        },
+        {
+          "ingredient_id": "jus_citron",
+          "quantite_g": 15
+        },
+        {
+          "ingredient_id": "riz_basmati",
+          "quantite_g": 500
+        }
+      ],
+      "etapes": [
+        "Saisir le poulet en cubes, réserver.",
+        "Fouetter beurre de cacahuète + lait de coco + soja + ail + gingembre + citron, chauffer à feu doux.",
+        "Enrober le poulet de sauce, servir avec le riz."
+      ],
+      "macros_totales": {
+        "kcal": 3073,
+        "proteines": 279.6,
+        "glucides": 272.7,
+        "lipides": 90.2,
+        "fibres": 9.9
+      },
+      "macros_par_portion": {
+        "kcal": 768.2,
+        "proteines": 69.9,
+        "glucides": 68.2,
+        "lipides": 22.6,
+        "fibres": 2.5
+      }
+    },
+    {
+      "id": "butter_chicken",
+      "nom": "Butter chicken léger + riz",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "poulet",
+        "indien",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "poulet_blanc",
+          "quantite_g": 1000
+        },
+        {
+          "ingredient_id": "fromage_blanc_3",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "jus_citron",
+          "quantite_g": 15
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 12
+        },
+        {
+          "ingredient_id": "garam_masala",
+          "quantite_g": 12
+        },
+        {
+          "ingredient_id": "ail_poudre",
+          "quantite_g": 6
+        },
+        {
+          "ingredient_id": "paprika_fume",
+          "quantite_g": 12
+        },
+        {
+          "ingredient_id": "curcuma",
+          "quantite_g": 10
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 12
+        },
+        {
+          "ingredient_id": "gingembre",
+          "quantite_g": 15
+        },
+        {
+          "ingredient_id": "concentre_tomate",
+          "quantite_g": 5
+        },
+        {
+          "ingredient_id": "pulpe_tomate",
+          "quantite_g": 400
+        },
+        {
+          "ingredient_id": "noix_cajou",
+          "quantite_g": 40
+        },
+        {
+          "ingredient_id": "riz_basmati",
+          "quantite_g": 500
+        }
+      ],
+      "etapes": [
+        "Mariner le poulet (fromage blanc, citron, épices), 1 h si possible.",
+        "Saisir le poulet, réserver. Suer oignons, ail, gingembre, concentré.",
+        "Ajouter épices, pulpe, cajou ; mijoter 10 min, mixer, remettre poulet + fromage blanc.",
+        "Servir avec le riz."
+      ],
+      "macros_totales": {
+        "kcal": 2534.9,
+        "proteines": 235.7,
+        "glucides": 242,
+        "lipides": 66.1,
+        "fibres": 23.5
+      },
+      "macros_par_portion": {
+        "kcal": 633.7,
+        "proteines": 58.9,
+        "glucides": 60.5,
+        "lipides": 16.5,
+        "fibres": 5.9
+      }
+    },
+    {
+      "id": "poulet_moutarde_riz",
+      "nom": "Poulet moutarde + riz",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "poulet",
+        "basique",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "poulet_blanc",
+          "quantite_g": 1000
+        },
+        {
+          "ingredient_id": "moutarde",
+          "quantite_g": 60
+        },
+        {
+          "ingredient_id": "creme_liquide_allegee",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 110
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        },
+        {
+          "ingredient_id": "riz_basmati",
+          "quantite_g": 500
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 20
+        }
+      ],
+      "etapes": [
+        "Mixer oignon + ail + moutarde, enrober le poulet, reposer 30 min.",
+        "Saisir le poulet, ajouter la crème allégée, mijoter 10 min. Servir avec le riz."
+      ],
+      "macros_totales": {
+        "kcal": 2875.8,
+        "proteines": 265.9,
+        "glucides": 271.7,
+        "lipides": 76.1,
+        "fibres": 7.8
+      },
+      "macros_par_portion": {
+        "kcal": 719,
+        "proteines": 66.5,
+        "glucides": 67.9,
+        "lipides": 19,
+        "fibres": 1.9
+      }
+    },
+    {
+      "id": "poulet_poivrons_paprika",
+      "nom": "Poulet poivrons paprika + riz",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "poulet",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "poulet_blanc",
+          "quantite_g": 1000
+        },
+        {
+          "ingredient_id": "poivron_rouge",
+          "quantite_g": 450
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 110
+        },
+        {
+          "ingredient_id": "pulpe_tomate",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "paprika_fume",
+          "quantite_g": 8
+        },
+        {
+          "ingredient_id": "riz_basmati",
+          "quantite_g": 320
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 10
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        }
+      ],
+      "etapes": [
+        "Saisir le poulet, réserver. Faire fondre poivrons + oignon + ail.",
+        "Ajouter pulpe + paprika fumé, remettre le poulet, mijoter 10 min. Servir avec le riz."
+      ],
+      "macros_totales": {
+        "kcal": 2693.2,
+        "proteines": 264.1,
+        "glucides": 296.9,
+        "lipides": 43.1,
+        "fibres": 21.1
+      },
+      "macros_par_portion": {
+        "kcal": 673.3,
+        "proteines": 66,
+        "glucides": 74.2,
+        "lipides": 10.8,
+        "fibres": 5.3
+      }
+    },
+    {
+      "id": "chili_complet",
+      "nom": "Chili complet (riz inclus)",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "bœuf",
+        "batch",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "steak_hache_5",
+          "quantite_g": 400
+        },
+        {
+          "ingredient_id": "haricots_rouges",
+          "quantite_g": 480
+        },
+        {
+          "ingredient_id": "pois_chiches",
+          "quantite_g": 265
+        },
+        {
+          "ingredient_id": "mais",
+          "quantite_g": 140
+        },
+        {
+          "ingredient_id": "poivron_rouge",
+          "quantite_g": 300
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 110
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 9
+        },
+        {
+          "ingredient_id": "pulpe_tomate",
+          "quantite_g": 800
+        },
+        {
+          "ingredient_id": "paprika_fume",
+          "quantite_g": 6
+        },
+        {
+          "ingredient_id": "cumin",
+          "quantite_g": 4
+        },
+        {
+          "ingredient_id": "piment_cayenne",
+          "quantite_g": 1
+        },
+        {
+          "ingredient_id": "riz_basmati",
+          "quantite_g": 250
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 10
+        },
+        {
+          "ingredient_id": "coriandre",
+          "quantite_g": 5
+        }
+      ],
+      "etapes": [
+        "Suer oignon + ail + poivrons, ajouter la viande écrasée, dorer.",
+        "Ajouter épices, pulpe, haricots, pois chiches, maïs ; mijoter 20 min.",
+        "Servir avec le riz, coriandre fraîche."
+      ],
+      "macros_totales": {
+        "kcal": 3183.9,
+        "proteines": 198.8,
+        "glucides": 447.3,
+        "lipides": 52.1,
+        "fibres": 72
+      },
+      "macros_par_portion": {
+        "kcal": 796,
+        "proteines": 49.7,
+        "glucides": 111.8,
+        "lipides": 13,
+        "fibres": 18
+      }
+    },
+    {
+      "id": "bolo_complete",
+      "nom": "Pâtes complètes bolognaise",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "bœuf",
+        "basique",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "steak_hache_5",
+          "quantite_g": 500
+        },
+        {
+          "ingredient_id": "pates_completes",
+          "quantite_g": 320
+        },
+        {
+          "ingredient_id": "pulpe_tomate",
+          "quantite_g": 500
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 110
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        },
+        {
+          "ingredient_id": "herbes_provence",
+          "quantite_g": 2
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 8
+        }
+      ],
+      "etapes": [
+        "Suer oignon + ail, dorer la viande, sel, poivre, herbes.",
+        "Ajouter la pulpe + un peu d'eau, mijoter 15 min. Servir sur pâtes complètes."
+      ],
+      "macros_totales": {
+        "kcal": 2094.6,
+        "proteines": 155.5,
+        "glucides": 241.6,
+        "lipides": 42.9,
+        "fibres": 35.1
+      },
+      "macros_par_portion": {
+        "kcal": 523.6,
+        "proteines": 38.9,
+        "glucides": 60.4,
+        "lipides": 10.7,
+        "fibres": 8.8
+      }
+    },
+    {
+      "id": "carbonara_diete",
+      "nom": "Carbonara diète (pâtes complètes)",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "porc",
+        "basique",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "pates_completes",
+          "quantite_g": 500
+        },
+        {
+          "ingredient_id": "allumettes_bacon",
+          "quantite_g": 300
+        },
+        {
+          "ingredient_id": "creme_liquide_allegee",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "parmesan",
+          "quantite_g": 60
+        },
+        {
+          "ingredient_id": "oeuf",
+          "quantite_g": 100
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 80
+        }
+      ],
+      "etapes": [
+        "Cuire les pâtes al dente, garder un peu d'eau de cuisson.",
+        "Griller les allumettes de bacon avec l'oignon, sans matière grasse.",
+        "Hors du feu : crème + œufs + parmesan + poivre, lier avec les pâtes et un peu d'eau de cuisson."
+      ],
+      "macros_totales": {
+        "kcal": 2179,
+        "proteines": 138.1,
+        "glucides": 223.5,
+        "lipides": 75.9,
+        "fibres": 27
+      },
+      "macros_par_portion": {
+        "kcal": 544.8,
+        "proteines": 34.5,
+        "glucides": 55.9,
+        "lipides": 19,
+        "fibres": 6.8
+      }
+    },
+    {
+      "id": "cabillaud_riz_courgettes",
+      "nom": "Cabillaud, riz, courgettes",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "poisson",
+        "léger",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "cabillaud",
+          "quantite_g": 800
+        },
+        {
+          "ingredient_id": "riz_basmati",
+          "quantite_g": 320
+        },
+        {
+          "ingredient_id": "courgette",
+          "quantite_g": 600
+        },
+        {
+          "ingredient_id": "jus_citron",
+          "quantite_g": 20
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 15
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        }
+      ],
+      "etapes": [
+        "Poêler les courgettes à l'ail. Cuire le riz.",
+        "Cuire le cabillaud à la poêle ou vapeur, citron, huile d'olive en finition."
+      ],
+      "macros_totales": {
+        "kcal": 2025.2,
+        "proteines": 175.6,
+        "glucides": 265.8,
+        "lipides": 25.4,
+        "fibres": 11.4
+      },
+      "macros_par_portion": {
+        "kcal": 506.3,
+        "proteines": 43.9,
+        "glucides": 66.5,
+        "lipides": 6.3,
+        "fibres": 2.9
+      }
+    },
+    {
+      "id": "saumon_patate_douce",
+      "nom": "Saumon, patate douce, haricots verts",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "poisson",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "saumon",
+          "quantite_g": 600
+        },
+        {
+          "ingredient_id": "patate_douce",
+          "quantite_g": 800
+        },
+        {
+          "ingredient_id": "haricots_verts",
+          "quantite_g": 500
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 10
+        },
+        {
+          "ingredient_id": "jus_citron",
+          "quantite_g": 15
+        }
+      ],
+      "etapes": [
+        "Rôtir la patate douce en cubes au four (200°, 25 min).",
+        "Cuire les haricots verts, snacker le saumon côté peau, citron."
+      ],
+      "macros_totales": {
+        "kcal": 2136.3,
+        "proteines": 141.9,
+        "glucides": 178,
+        "lipides": 89.8,
+        "fibres": 39
+      },
+      "macros_par_portion": {
+        "kcal": 534.1,
+        "proteines": 35.5,
+        "glucides": 44.5,
+        "lipides": 22.4,
+        "fibres": 9.8
+      }
+    },
+    {
+      "id": "papillote_saumon_poireaux",
+      "nom": "Papillote saumon, fondue de poireaux, pâtes",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "poisson",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "saumon",
+          "quantite_g": 600
+        },
+        {
+          "ingredient_id": "poireau",
+          "quantite_g": 800
+        },
+        {
+          "ingredient_id": "creme_liquide_allegee",
+          "quantite_g": 150
+        },
+        {
+          "ingredient_id": "pates_completes",
+          "quantite_g": 240
+        },
+        {
+          "ingredient_id": "jus_citron",
+          "quantite_g": 15
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        }
+      ],
+      "etapes": [
+        "Fondue : suer les poireaux à couvert avec l'ail, ajouter la crème.",
+        "Saumon en papillote (200°, 15 min) avec citron. Servir avec pâtes complètes."
+      ],
+      "macros_totales": {
+        "kcal": 2523.1,
+        "proteines": 168.1,
+        "glucides": 194.3,
+        "lipides": 109,
+        "fibres": 39.5
+      },
+      "macros_par_portion": {
+        "kcal": 630.8,
+        "proteines": 42,
+        "glucides": 48.6,
+        "lipides": 27.2,
+        "fibres": 9.9
+      }
+    },
+    {
+      "id": "rougail_allege",
+      "nom": "Rougail saucisse allégé, carottes, riz",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "porc",
+        "batch",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "saucisse_fumee",
+          "quantite_g": 300
+        },
+        {
+          "ingredient_id": "knacki",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "carotte",
+          "quantite_g": 700
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 110
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        },
+        {
+          "ingredient_id": "pulpe_tomate",
+          "quantite_g": 400
+        },
+        {
+          "ingredient_id": "paprika_fume",
+          "quantite_g": 4
+        },
+        {
+          "ingredient_id": "curry",
+          "quantite_g": 4
+        },
+        {
+          "ingredient_id": "gingembre",
+          "quantite_g": 8
+        },
+        {
+          "ingredient_id": "jus_citron",
+          "quantite_g": 15
+        },
+        {
+          "ingredient_id": "riz_basmati",
+          "quantite_g": 500
+        }
+      ],
+      "etapes": [
+        "Rondelles de saucisses, suer oignon + ail, ajouter carottes mixées.",
+        "Ajouter pulpe + épices + citron, mijoter 20 min. Servir avec le riz."
+      ],
+      "macros_totales": {
+        "kcal": 3093.5,
+        "proteines": 104.2,
+        "glucides": 354.7,
+        "lipides": 136.9,
+        "fibres": 33.6
+      },
+      "macros_par_portion": {
+        "kcal": 773.4,
+        "proteines": 26.1,
+        "glucides": 88.7,
+        "lipides": 34.2,
+        "fibres": 8.4
+      }
+    },
+    {
+      "id": "boeuf_chow_mein",
+      "nom": "Bœuf chow mein léger",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "bœuf",
+        "asiatique",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "basse_cote",
+          "quantite_g": 500
+        },
+        {
+          "ingredient_id": "nouilles_chinoises",
+          "quantite_g": 240
+        },
+        {
+          "ingredient_id": "chou_blanc",
+          "quantite_g": 300
+        },
+        {
+          "ingredient_id": "carotte",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 110
+        },
+        {
+          "ingredient_id": "sauce_soja",
+          "quantite_g": 50
+        },
+        {
+          "ingredient_id": "huile_sesame",
+          "quantite_g": 15
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        },
+        {
+          "ingredient_id": "gingembre",
+          "quantite_g": 10
+        }
+      ],
+      "etapes": [
+        "Mariner le bœuf en lamelles (soja, sésame, ail, gingembre).",
+        "Sauter le bœuf à feu vif, réserver. Sauter chou + carotte + oignon.",
+        "Ajouter nouilles cuites + bœuf + reste de marinade, 2 min à feu vif."
+      ],
+      "macros_totales": {
+        "kcal": 2264.8,
+        "proteines": 131.3,
+        "glucides": 213.5,
+        "lipides": 94.8,
+        "fibres": 22.5
+      },
+      "macros_par_portion": {
+        "kcal": 566.2,
+        "proteines": 32.8,
+        "glucides": 53.4,
+        "lipides": 23.7,
+        "fibres": 5.6
+      }
+    },
+    {
+      "id": "dahl_lentilles",
+      "nom": "Dahl de lentilles corail + riz",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "végétarien",
+        "batch",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "lentilles_corail",
+          "quantite_g": 320
+        },
+        {
+          "ingredient_id": "lait_coco_allege",
+          "quantite_g": 400
+        },
+        {
+          "ingredient_id": "pulpe_tomate",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 110
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        },
+        {
+          "ingredient_id": "curry",
+          "quantite_g": 10
+        },
+        {
+          "ingredient_id": "curcuma",
+          "quantite_g": 4
+        },
+        {
+          "ingredient_id": "cumin",
+          "quantite_g": 3
+        },
+        {
+          "ingredient_id": "riz_basmati",
+          "quantite_g": 240
+        }
+      ],
+      "etapes": [
+        "Suer oignon + ail + épices, ajouter lentilles + pulpe + lait de coco + eau.",
+        "Mijoter 20 min en remuant. Servir avec le riz."
+      ],
+      "macros_totales": {
+        "kcal": 2573.1,
+        "proteines": 105.4,
+        "glucides": 395.5,
+        "lipides": 51.9,
+        "fibres": 47.8
+      },
+      "macros_par_portion": {
+        "kcal": 643.3,
+        "proteines": 26.4,
+        "glucides": 98.9,
+        "lipides": 13,
+        "fibres": 11.9
+      }
+    },
+    {
+      "id": "hachis_patate_douce",
+      "nom": "Hachis parmentier patate douce",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "bœuf",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "steak_hache_5",
+          "quantite_g": 500
+        },
+        {
+          "ingredient_id": "patate_douce",
+          "quantite_g": 1000
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 110
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        },
+        {
+          "ingredient_id": "lait_ecreme",
+          "quantite_g": 100
+        },
+        {
+          "ingredient_id": "emmental_allege",
+          "quantite_g": 60
+        }
+      ],
+      "etapes": [
+        "Purée : patate douce cuite à l'eau + lait écrémé.",
+        "Dorer viande + oignon + ail. Monter le hachis, emmental allégé, four 15 min à 200°."
+      ],
+      "macros_totales": {
+        "kcal": 1793.8,
+        "proteines": 142.9,
+        "glucides": 206.1,
+        "lipides": 36.6,
+        "fibres": 32.2
+      },
+      "macros_par_portion": {
+        "kcal": 448.4,
+        "proteines": 35.7,
+        "glucides": 51.5,
+        "lipides": 9.2,
+        "fibres": 8.1
+      }
+    },
+    {
+      "id": "gratin_poireaux_pdt",
+      "nom": "Gratin poireaux, pommes de terre, bacon",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "porc",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "poireau",
+          "quantite_g": 700
+        },
+        {
+          "ingredient_id": "pomme_de_terre",
+          "quantite_g": 600
+        },
+        {
+          "ingredient_id": "allumettes_bacon",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "creme_liquide_allegee",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "emmental_allege",
+          "quantite_g": 60
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        }
+      ],
+      "etapes": [
+        "Précuire les pommes de terre. Suer poireaux + bacon + ail.",
+        "Mélanger avec la crème dans un plat, emmental dessus, four 25 min à 180°."
+      ],
+      "macros_totales": {
+        "kcal": 1392.8,
+        "proteines": 83.7,
+        "glucides": 142.3,
+        "lipides": 49.9,
+        "fibres": 28.6
+      },
+      "macros_par_portion": {
+        "kcal": 348.2,
+        "proteines": 20.9,
+        "glucides": 35.6,
+        "lipides": 12.5,
+        "fibres": 7.2
+      }
+    },
+    {
+      "id": "steak_pates",
+      "nom": "Steaks hachés + pâtes complètes",
+      "categorie": "Plat",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "bœuf",
+        "basique",
+        "rapide"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "steak_hache_5",
+          "quantite_g": 250
+        },
+        {
+          "ingredient_id": "pates_completes",
+          "quantite_g": 80
+        },
+        {
+          "ingredient_id": "pulpe_tomate",
+          "quantite_g": 100
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 3
+        }
+      ],
+      "etapes": [
+        "Cuire les pâtes. Poêler les 2 steaks, réchauffer la sauce tomate."
+      ],
+      "macros_totales": {
+        "kcal": 681.5,
+        "proteines": 64.3,
+        "glucides": 56.2,
+        "lipides": 17.8,
+        "fibres": 7.7
+      },
+      "macros_par_portion": {
+        "kcal": 681.5,
+        "proteines": 64.3,
+        "glucides": 56.2,
+        "lipides": 17.8,
+        "fibres": 7.7
+      }
+    },
+    {
+      "id": "basse_cote_pates",
+      "nom": "Basse côte + frites",
+      "categorie": "Plat",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "bœuf",
+        "basique",
+        "rapide"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "basse_cote",
+          "quantite_g": 250
+        },
+        {
+          "ingredient_id": "frites_carrefour",
+          "quantite_g": 300
+        },
+        {
+          "ingredient_id": "beurre",
+          "quantite_g": 5
+        }
+      ],
+      "etapes": [
+        "Saisir la basse côte à feu vif, repos 3 min. Pâtes + noisette de beurre."
+      ],
+      "macros_totales": {
+        "kcal": 737.5,
+        "proteines": 48.4,
+        "glucides": 51.2,
+        "lipides": 36.1,
+        "fibres": 6.4
+      },
+      "macros_par_portion": {
+        "kcal": 737.5,
+        "proteines": 48.4,
+        "glucides": 51.2,
+        "lipides": 36.1,
+        "fibres": 6.4
+      }
+    },
+    {
+      "id": "entrecote_pdt",
+      "nom": "Entrecôte + pommes de terre",
+      "categorie": "Plat",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "bœuf",
+        "rapide"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "entrecote",
+          "quantite_g": 250
+        },
+        {
+          "ingredient_id": "pomme_de_terre",
+          "quantite_g": 350
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 5
+        },
+        {
+          "ingredient_id": "salade_verte",
+          "quantite_g": 50
+        }
+      ],
+      "etapes": [
+        "Pommes de terre rôties au four (200°, 30 min) avec un filet d'huile.",
+        "Saisir l'entrecôte, repos 3 min. Salade verte."
+      ],
+      "macros_totales": {
+        "kcal": 870,
+        "proteines": 55.2,
+        "glucides": 60.2,
+        "lipides": 44.2,
+        "fibres": 7
+      },
+      "macros_par_portion": {
+        "kcal": 870,
+        "proteines": 55.2,
+        "glucides": 60.2,
+        "lipides": 44.2,
+        "fibres": 7
+      }
+    },
+    {
+      "id": "omelette_complete",
+      "nom": "Omelette champignons-jambon + pommes de terre",
+      "categorie": "Plat",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "œufs",
+        "rapide"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "oeuf",
+          "quantite_g": 150
+        },
+        {
+          "ingredient_id": "champignon",
+          "quantite_g": 150
+        },
+        {
+          "ingredient_id": "jambon_blanc",
+          "quantite_g": 50
+        },
+        {
+          "ingredient_id": "pomme_de_terre",
+          "quantite_g": 250
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 5
+        }
+      ],
+      "etapes": [
+        "Sauter pommes de terre précuites + champignons.",
+        "Verser les œufs battus + jambon, cuire à feu doux."
+      ],
+      "macros_totales": {
+        "kcal": 547.5,
+        "proteines": 37.8,
+        "glucides": 47,
+        "lipides": 21.9,
+        "fibres": 6.8
+      },
+      "macros_par_portion": {
+        "kcal": 547.5,
+        "proteines": 37.8,
+        "glucides": 47,
+        "lipides": 21.9,
+        "fibres": 6.8
+      }
+    },
+    {
+      "id": "wrap_poulet",
+      "nom": "Wrap poulet crudités",
+      "categorie": "Plat",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "poulet",
+        "rapide",
+        "froid"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "wrap_complet",
+          "quantite_g": 60
+        },
+        {
+          "ingredient_id": "poulet_blanc",
+          "quantite_g": 125
+        },
+        {
+          "ingredient_id": "salade_verte",
+          "quantite_g": 30
+        },
+        {
+          "ingredient_id": "tomate",
+          "quantite_g": 50
+        },
+        {
+          "ingredient_id": "fromage_frais_allege",
+          "quantite_g": 30
+        }
+      ],
+      "etapes": [
+        "Poêler le poulet en lamelles (ou utiliser un reste).",
+        "Tartiner le wrap de fromage frais, garnir, rouler serré."
+      ],
+      "macros_totales": {
+        "kcal": 389.8,
+        "proteines": 37.4,
+        "glucides": 33.1,
+        "lipides": 9.8,
+        "fibres": 4.6
+      },
+      "macros_par_portion": {
+        "kcal": 389.8,
+        "proteines": 37.4,
+        "glucides": 33.1,
+        "lipides": 9.8,
+        "fibres": 4.6
+      }
+    },
+    {
+      "id": "salade_thon_quinoa",
+      "nom": "Salade quinoa-thon",
+      "categorie": "Plat",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "poisson",
+        "froid",
+        "rapide"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "quinoa",
+          "quantite_g": 70
+        },
+        {
+          "ingredient_id": "thon_boite",
+          "quantite_g": 100
+        },
+        {
+          "ingredient_id": "tomate",
+          "quantite_g": 120
+        },
+        {
+          "ingredient_id": "mais",
+          "quantite_g": 60
+        },
+        {
+          "ingredient_id": "oignon_rouge",
+          "quantite_g": 25
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 7
+        },
+        {
+          "ingredient_id": "jus_citron",
+          "quantite_g": 10
+        }
+      ],
+      "etapes": [
+        "Cuire le quinoa, refroidir.",
+        "Mélanger thon, tomate, maïs, oignon rouge ; assaisonner huile + citron."
+      ],
+      "macros_totales": {
+        "kcal": 521.4,
+        "proteines": 38,
+        "glucides": 58.4,
+        "lipides": 13.3,
+        "fibres": 8.6
+      },
+      "macros_par_portion": {
+        "kcal": 521.4,
+        "proteines": 38,
+        "glucides": 58.4,
+        "lipides": 13.3,
+        "fibres": 8.6
+      }
+    },
+    {
+      "id": "bowl_avoine_fdb",
+      "nom": "Bowl avoine, fromage blanc, fruits rouges",
+      "categorie": "Petit-déjeuner",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "petit-déj",
+        "rapide"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "flocons_avoine",
+          "quantite_g": 60
+        },
+        {
+          "ingredient_id": "fromage_blanc_0",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "fruits_rouges",
+          "quantite_g": 100
+        },
+        {
+          "ingredient_id": "miel",
+          "quantite_g": 10
+        },
+        {
+          "ingredient_id": "amandes",
+          "quantite_g": 10
+        }
+      ],
+      "etapes": [
+        "Mélanger fromage blanc + flocons, garnir fruits rouges, miel, amandes."
+      ],
+      "macros_totales": {
+        "kcal": 455,
+        "proteines": 26.9,
+        "glucides": 61.7,
+        "lipides": 10.2,
+        "fibres": 10.6
+      },
+      "macros_par_portion": {
+        "kcal": 455,
+        "proteines": 26.9,
+        "glucides": 61.7,
+        "lipides": 10.2,
+        "fibres": 10.6
+      }
+    },
+    {
+      "id": "pancakes_banane",
+      "nom": "Pancakes banane-avoine",
+      "categorie": "Petit-déjeuner",
+      "portions": 1,
+      "congelable": true,
+      "tags": [
+        "petit-déj",
+        "goûter"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "oeuf",
+          "quantite_g": 100
+        },
+        {
+          "ingredient_id": "flocons_avoine",
+          "quantite_g": 60
+        },
+        {
+          "ingredient_id": "banane",
+          "quantite_g": 120
+        },
+        {
+          "ingredient_id": "fromage_blanc_0",
+          "quantite_g": 100
+        }
+      ],
+      "etapes": [
+        "Mixer tous les ingrédients en pâte lisse.",
+        "Cuire de petites louches à la poêle antiadhésive, 1-2 min par face. Se congèle bien."
+      ],
+      "macros_totales": {
+        "kcal": 518,
+        "proteines": 29.8,
+        "glucides": 64.7,
+        "lipides": 14.6,
+        "fibres": 7.4
+      },
+      "macros_par_portion": {
+        "kcal": 518,
+        "proteines": 29.8,
+        "glucides": 64.7,
+        "lipides": 14.6,
+        "fibres": 7.4
+      }
+    },
+    {
+      "id": "gaufres_proteinees",
+      "nom": "Gaufres protéinées avoine",
+      "categorie": "Goûter",
+      "portions": 2,
+      "congelable": true,
+      "tags": [
+        "goûter",
+        "petit-déj"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "flocons_avoine",
+          "quantite_g": 120
+        },
+        {
+          "ingredient_id": "oeuf",
+          "quantite_g": 150
+        },
+        {
+          "ingredient_id": "fromage_blanc_0",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "levure_chimique",
+          "quantite_g": 8
+        },
+        {
+          "ingredient_id": "miel",
+          "quantite_g": 15
+        }
+      ],
+      "etapes": [
+        "Mixer flocons en farine, mélanger avec le reste.",
+        "Cuire au gaufrier 3-4 min. Se congèlent et passent au grille-pain."
+      ],
+      "macros_totales": {
+        "kcal": 804.5,
+        "proteines": 50.7,
+        "glucides": 96.2,
+        "lipides": 23.5,
+        "fibres": 10.8
+      },
+      "macros_par_portion": {
+        "kcal": 402.2,
+        "proteines": 25.4,
+        "glucides": 48.1,
+        "lipides": 11.8,
+        "fibres": 5.4
+      }
+    },
+    {
+      "id": "overnight_oats",
+      "nom": "Overnight oats skyr-pomme-cannelle",
+      "categorie": "Petit-déjeuner",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "petit-déj",
+        "froid"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "flocons_avoine",
+          "quantite_g": 50
+        },
+        {
+          "ingredient_id": "skyr",
+          "quantite_g": 150
+        },
+        {
+          "ingredient_id": "lait_ecreme",
+          "quantite_g": 100
+        },
+        {
+          "ingredient_id": "pomme",
+          "quantite_g": 100
+        },
+        {
+          "ingredient_id": "cannelle",
+          "quantite_g": 2
+        },
+        {
+          "ingredient_id": "miel",
+          "quantite_g": 10
+        }
+      ],
+      "etapes": [
+        "La veille : mélanger flocons + skyr + lait dans un bocal.",
+        "Le matin : pomme en dés, cannelle, miel."
+      ],
+      "macros_totales": {
+        "kcal": 394.5,
+        "proteines": 25.3,
+        "glucides": 62.1,
+        "lipides": 4.3,
+        "fibres": 7.8
+      },
+      "macros_par_portion": {
+        "kcal": 394.5,
+        "proteines": 25.3,
+        "glucides": 62.1,
+        "lipides": 4.3,
+        "fibres": 7.8
+      }
+    },
+    {
+      "id": "porridge_choco",
+      "nom": "Porridge choco-banane",
+      "categorie": "Petit-déjeuner",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "petit-déj"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "flocons_avoine",
+          "quantite_g": 60
+        },
+        {
+          "ingredient_id": "lait_demi",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "banane",
+          "quantite_g": 60
+        },
+        {
+          "ingredient_id": "chocolat_noir",
+          "quantite_g": 10
+        },
+        {
+          "ingredient_id": "miel",
+          "quantite_g": 20
+        }
+      ],
+      "etapes": [
+        "Cuire flocons + lait 3-4 min en remuant.",
+        "Ajouter banane en rondelles et chocolat."
+      ],
+      "macros_totales": {
+        "kcal": 423,
+        "proteines": 15.7,
+        "glucides": 60.6,
+        "lipides": 11.6,
+        "fibres": 7.4
+      },
+      "macros_par_portion": {
+        "kcal": 423,
+        "proteines": 15.7,
+        "glucides": 60.6,
+        "lipides": 11.6,
+        "fibres": 7.4
+      }
+    },
+    {
+      "id": "cookies_avoine",
+      "nom": "Cookies avoine-banane (congelables)",
+      "categorie": "Goûter",
+      "portions": 3,
+      "congelable": true,
+      "tags": [
+        "goûter",
+        "batch"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "flocons_avoine",
+          "quantite_g": 150
+        },
+        {
+          "ingredient_id": "banane",
+          "quantite_g": 240
+        },
+        {
+          "ingredient_id": "oeuf",
+          "quantite_g": 50
+        },
+        {
+          "ingredient_id": "chocolat_noir",
+          "quantite_g": 30
+        },
+        {
+          "ingredient_id": "beurre_cacahuete",
+          "quantite_g": 30
+        }
+      ],
+      "etapes": [
+        "Écraser les bananes, mélanger tout, former 6 cookies.",
+        "Four 180°, 12-15 min. 2 cookies par portion, se congèlent."
+      ],
+      "macros_totales": {
+        "kcal": 1187.5,
+        "proteines": 38.7,
+        "glucides": 150.9,
+        "lipides": 43.1,
+        "fibres": 22.4
+      },
+      "macros_par_portion": {
+        "kcal": 395.8,
+        "proteines": 12.9,
+        "glucides": 50.3,
+        "lipides": 14.4,
+        "fibres": 7.5
+      }
+    },
+    {
+      "id": "collation_skyr_bc",
+      "nom": "Collation 22h : skyr + beurre de cacahuète",
+      "categorie": "Collation",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "collation",
+        "soir"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "skyr",
+          "quantite_g": 150
+        },
+        {
+          "ingredient_id": "beurre_cacahuete",
+          "quantite_g": 15
+        }
+      ],
+      "etapes": [
+        "Mélanger, c'est prêt."
+      ],
+      "macros_totales": {
+        "kcal": 175.5,
+        "proteines": 18.9,
+        "glucides": 7.8,
+        "lipides": 7.8,
+        "fibres": 0.9
+      },
+      "macros_par_portion": {
+        "kcal": 175.5,
+        "proteines": 18.9,
+        "glucides": 7.8,
+        "lipides": 7.8,
+        "fibres": 0.9
+      }
+    },
+    {
+      "id": "fromage_blanc_dessert",
+      "nom": "Dessert : fromage blanc 0% (200 g)",
+      "categorie": "Collation",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "dessert",
+        "midi",
+        "soir"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "fromage_blanc_0",
+          "quantite_g": 200
+        }
+      ],
+      "etapes": [
+        "200 g de fromage blanc 0% en dessert du midi et du soir."
+      ],
+      "macros_totales": {
+        "kcal": 90,
+        "proteines": 16,
+        "glucides": 8,
+        "lipides": 0.4,
+        "fibres": 0
+      },
+      "macros_par_portion": {
+        "kcal": 90,
+        "proteines": 16,
+        "glucides": 8,
+        "lipides": 0.4,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "amande",
+      "nom": "amande",
+      "categorie": "Collation",
+      "portions": 1,
+      "congelable": false,
+      "tags": [],
+      "ingredients": [
+        {
+          "ingredient_id": "amandes",
+          "quantite_g": 30
+        }
+      ],
+      "etapes": []
+    },
+    {
+      "id": "lasagne_viande_hachee",
+      "nom": "Lasagnes à la viande hachée 5%",
+      "categorie": "Plat",
+      "portions": 4,
+      "congelable": true,
+      "tags": [
+        "bœuf",
+        "meal prep",
+        "four"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "steak_hache_5",
+          "quantite_g": 500
+        },
+        {
+          "ingredient_id": "feuilles_lasagne",
+          "quantite_g": 250
+        },
+        {
+          "ingredient_id": "pulpe_tomate",
+          "quantite_g": 400
+        },
+        {
+          "ingredient_id": "concentre_tomate",
+          "quantite_g": 30
+        },
+        {
+          "ingredient_id": "oignon",
+          "quantite_g": 100
+        },
+        {
+          "ingredient_id": "ail",
+          "quantite_g": 6
+        },
+        {
+          "ingredient_id": "creme_liquide_allegee",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "emmental_allege",
+          "quantite_g": 80
+        },
+        {
+          "ingredient_id": "parmesan",
+          "quantite_g": 30
+        },
+        {
+          "ingredient_id": "herbes_provence",
+          "quantite_g": 2
+        }
+      ],
+      "etapes": [
+        "Faire revenir l'oignon et l'ail émincés, ajouter la viande hachée 5% et la saisir.",
+        "Ajouter la pulpe de tomate, le concentré, les herbes, sel et poivre. Laisser mijoter 15 min.",
+        "Monter les lasagnes en alternant feuilles, sauce viande et un filet de crème allégée.",
+        "Couvrir d'emmental allégé et de parmesan. Four 180°, 35-40 min.",
+        "Découper en 4 parts. Se congèle très bien à la portion."
+      ],
+      "macros_totales": {
+        "kcal": 2443.6,
+        "proteines": 182,
+        "glucides": 221.8,
+        "lipides": 84,
+        "fibres": 16.5
+      },
+      "macros_par_portion": {
+        "kcal": 610.9,
+        "proteines": 45.5,
+        "glucides": 55.5,
+        "lipides": 21,
+        "fibres": 4.1
+      }
+    },
+    {
+      "id": "nuggets_poulet_airfryer",
+      "nom": "Nuggets de poulet maison (air fryer)",
+      "categorie": "Plat",
+      "portions": 2,
+      "congelable": true,
+      "tags": [
+        "poulet",
+        "air fryer",
+        "meal prep"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "poulet_blanc",
+          "quantite_g": 400
+        },
+        {
+          "ingredient_id": "oeuf",
+          "quantite_g": 50
+        },
+        {
+          "ingredient_id": "farine_ble",
+          "quantite_g": 30
+        },
+        {
+          "ingredient_id": "chapelure",
+          "quantite_g": 60
+        },
+        {
+          "ingredient_id": "paprika_fume",
+          "quantite_g": 2
+        },
+        {
+          "ingredient_id": "ail_poudre",
+          "quantite_g": 2
+        }
+      ],
+      "etapes": [
+        "Broyer les filets de poulet au mixeur avec sel, paprika et ail en poudre jusqu'à obtenir une pâte.",
+        "Former des nuggets à la main (ou à la cuillère).",
+        "Paner : passer chaque nugget dans la farine, puis l'œuf battu, puis la chapelure.",
+        "Cuisson air fryer 180°, 12-15 min en retournant à mi-cuisson.",
+        "Se congèlent crus ou cuits."
+      ],
+      "macros_totales": {
+        "kcal": 894.7,
+        "proteines": 109.1,
+        "glucides": 67.6,
+        "lipides": 18.1,
+        "fibres": 4.2
+      },
+      "macros_par_portion": {
+        "kcal": 447.4,
+        "proteines": 54.5,
+        "glucides": 33.8,
+        "lipides": 9.1,
+        "fibres": 2.1
+      }
+    },
+    {
+      "id": "frites_carrefour_airfryer",
+      "nom": "Frites standard Carrefour (air fryer)",
+      "categorie": "Plat",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "accompagnement",
+        "air fryer",
+        "rapide"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "frites_carrefour",
+          "quantite_g": 150
+        },
+        {
+          "ingredient_id": "huile_olive",
+          "quantite_g": 3
+        }
+      ],
+      "etapes": [
+        "Verser les frites surgelées dans le panier de l'air fryer, ajouter un filet d'huile (facultatif).",
+        "Cuisson air fryer 200°, 15-18 min en secouant le panier à mi-cuisson.",
+        "À ajouter en accompagnement certains jours."
+      ],
+      "macros_totales": {
+        "kcal": 267,
+        "proteines": 4.2,
+        "glucides": 37.5,
+        "lipides": 10.5,
+        "fibres": 4.5
+      },
+      "macros_par_portion": {
+        "kcal": 267,
+        "proteines": 4.2,
+        "glucides": 37.5,
+        "lipides": 10.5,
+        "fibres": 4.5
+      }
+    },
+    {
+      "id": "bonbons_plaisir",
+      "nom": "Bonbons (plaisir)",
+      "categorie": "Collation",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "plaisir",
+        "sucré"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "bonbons",
+          "quantite_g": 30
+        }
+      ],
+      "etapes": [
+        "Portion plaisir d'environ 30 g, à ajouter ponctuellement selon les macros restantes."
+      ],
+      "macros_totales": {
+        "kcal": 102,
+        "proteines": 1.5,
+        "glucides": 24,
+        "lipides": 0.1,
+        "fibres": 0
+      },
+      "macros_par_portion": {
+        "kcal": 102,
+        "proteines": 1.5,
+        "glucides": 24,
+        "lipides": 0.1,
+        "fibres": 0
+      }
+    },
+    {
+      "id": "cafe_sucre",
+      "nom": "Café + 5 g de sucre",
+      "categorie": "Collation",
+      "portions": 1,
+      "congelable": false,
+      "tags": [
+        "boisson",
+        "matin"
+      ],
+      "ingredients": [
+        {
+          "ingredient_id": "cafe",
+          "quantite_g": 200
+        },
+        {
+          "ingredient_id": "sucre_blanc",
+          "quantite_g": 5
+        }
+      ],
+      "etapes": [
+        "Préparer un café, ajouter 5 g de sucre blanc et mélanger."
+      ],
+      "macros_totales": {
+        "kcal": 24,
+        "proteines": 0.2,
+        "glucides": 5,
+        "lipides": 0,
+        "fibres": 0
+      },
+      "macros_par_portion": {
+        "kcal": 24,
+        "proteines": 0.2,
+        "glucides": 5,
+        "lipides": 0,
+        "fibres": 0
+      }
+    }
+  ],
+  "plan": {
+    "1": {
+      "0": {
+        "matin": [
+          {
+            "rid": "cafe_sucre",
+            "portions": 1
+          }
+        ],
+        "midi": [
+          {
+            "rid": "poulet_coco_curry",
+            "portions": 1
+          }
+        ],
+        "gouter": [
+          {
+            "rid": "amande",
+            "portions": 1
+          }
+        ],
+        "soir": [
+          {
+            "rid": "poulet_coco_curry",
+            "portions": 1
+          }
+        ],
+        "nuit": [
+          {
+            "rid": "bowl_avoine_fdb",
+            "portions": 1
+          }
+        ]
+      },
+      "1": {
+        "matin": [
+          {
+            "rid": "cafe_sucre",
+            "portions": 1
+          }
+        ],
+        "midi": [
+          {
+            "rid": "saumon_patate_douce",
+            "portions": 1
+          },
+          {
+            "rid": "saumon_patate_douce",
+            "portions": 1
+          }
+        ],
+        "gouter": [
+          {
+            "rid": "amande",
+            "portions": 1
+          }
+        ],
+        "soir": [
+          {
+            "rid": "fromage_blanc_dessert",
+            "portions": 1
+          },
+          {
+            "rid": "chili_complet",
+            "portions": 1
+          }
+        ],
+        "nuit": [
+          {
+            "rid": "bowl_avoine_fdb",
+            "portions": 1
+          }
+        ]
+      },
+      "2": {
+        "matin": [
+          {
+            "rid": "cafe_sucre",
+            "portions": 1
+          }
+        ],
+        "midi": [
+          {
+            "rid": "chili_complet",
+            "portions": 1
+          }
+        ],
+        "gouter": [
+          {
+            "rid": "amande",
+            "portions": 1
+          }
+        ],
+        "soir": [
+          {
+            "rid": "saumon_patate_douce",
+            "portions": 1
+          },
+          {
+            "rid": "saumon_patate_douce",
+            "portions": 1
+          }
+        ],
+        "nuit": [
+          {
+            "rid": "bowl_avoine_fdb",
+            "portions": 1
+          }
+        ]
+      },
+      "3": {
+        "matin": [
+          {
+            "rid": "cafe_sucre",
+            "portions": 1
+          }
+        ],
+        "midi": [
+          {
+            "rid": "poulet_moutarde_riz",
+            "portions": 1
+          }
+        ],
+        "gouter": [
+          {
+            "rid": "amande",
+            "portions": 1
+          },
+          {
+            "rid": "amande",
+            "portions": 1
+          }
+        ],
+        "soir": [
+          {
+            "rid": "chili_complet",
+            "portions": 1
+          }
+        ],
+        "nuit": [
+          {
+            "rid": "bowl_avoine_fdb",
+            "portions": 1
+          }
+        ]
+      },
+      "4": {
+        "matin": [
+          {
+            "rid": "cafe_sucre",
+            "portions": 1
+          }
+        ],
+        "midi": [
+          {
+            "rid": "poulet_moutarde_riz",
+            "portions": 1
+          }
+        ],
+        "gouter": [
+          {
+            "rid": "amande",
+            "portions": 1
+          },
+          {
+            "rid": "amande",
+            "portions": 1
+          }
+        ],
+        "soir": [
+          {
+            "rid": "chili_complet",
+            "portions": 1
+          }
+        ],
+        "nuit": [
+          {
+            "rid": "bowl_avoine_fdb",
+            "portions": 1
+          }
+        ]
+      },
+      "5": {
+        "matin": [],
+        "midi": [
+          {
+            "rid": "poulet_moutarde_riz",
+            "portions": 1
+          }
+        ],
+        "gouter": [
+          {
+            "rid": "bonbons_plaisir",
+            "portions": 1
+          }
+        ],
+        "soir": [
+          {
+            "rid": "basse_cote_pates",
+            "portions": 1
+          }
+        ],
+        "nuit": [
+          {
+            "rid": "bowl_avoine_fdb",
+            "portions": 1
+          }
+        ]
+      },
+      "6": {
+        "matin": [
+          {
+            "rid": "pancakes_banane",
+            "portions": 1
+          }
+        ],
+        "midi": [
+          {
+            "rid": "carbonara_diete",
+            "portions": 1
+          }
+        ],
+        "gouter": [],
+        "soir": [
+          {
+            "rid": "poulet_moutarde_riz",
+            "portions": 1
+          }
+        ],
+        "nuit": [
+          {
+            "rid": "fromage_blanc_dessert",
+            "portions": 1
+          },
+          {
+            "rid": "amande",
+            "portions": 1
+          }
+        ]
+      }
+    },
+    "2": {
+      "0": {
+        "matin": [],
+        "midi": [],
+        "gouter": [],
+        "soir": [],
+        "nuit": []
+      },
+      "1": {
+        "matin": [],
+        "midi": [],
+        "gouter": [],
+        "soir": [],
+        "nuit": []
+      },
+      "2": {
+        "matin": [],
+        "midi": [],
+        "gouter": [],
+        "soir": [],
+        "nuit": []
+      },
+      "3": {
+        "matin": [],
+        "midi": [],
+        "gouter": [],
+        "soir": [],
+        "nuit": []
+      },
+      "4": {
+        "matin": [],
+        "midi": [],
+        "gouter": [],
+        "soir": [],
+        "nuit": []
+      },
+      "5": {
+        "matin": [],
+        "midi": [],
+        "gouter": [],
+        "soir": [],
+        "nuit": []
+      },
+      "6": {
+        "matin": [],
+        "midi": [],
+        "gouter": [],
+        "soir": [],
+        "nuit": []
+      }
+    }
+  },
+  "objectifs": {
+    "poids": 80,
+    "kcal": 2500,
+    "prot": 160,
+    "lip": 80,
+    "fibres": 30,
+    "split": {
+      "matin": 25,
+      "midi": 45,
+      "gouter": 25,
+      "soir": 45,
+      "nuit": 20
+    }
+  },
+  "checked": {}
+};
 
 
 // ---------------- state ----------------
