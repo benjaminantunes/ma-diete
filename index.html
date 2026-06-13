@@ -3938,15 +3938,26 @@ async function cloudPull(){
     return;
   }
   if(row && row.data){
-    const remote = migrate(row.data);
-    mergeLibrary(remote);                       // garde tes ajouts locaux, ajoute ceux du compte
-    if(remote.plan) state.plan = remote.plan;
-    if(remote.objectifs) state.objectifs = remote.objectifs;
-    if(remote.pesees) state.pesees = remote.pesees;
-    if(remote.checked) state.checked = remote.checked;
+    mergeFromCloud(migrate(row.data));
   }
   const ok = await cloudPushNow();              // converge les deux côtés
   setSaveState(ok ? 'Synchronisé ☁︎ ✓' : 'Local ✓ · cloud à réessayer');
+}
+// Synchro d'un compte : le cloud fait autorité (les MODIFICATIONS se propagent),
+// mais on conserve les ajouts purement locaux (par nom) que le cloud ne connaît pas encore.
+function mergeFromCloud(remote){
+  const rIng = remote.ingredients || [];
+  const rRec = remote.recettes || [];
+  const rIngNames = new Set(rIng.map(i=>nameKey(i.nom)));
+  const rRecNames = new Set(rRec.map(r=>nameKey(r.nom)));
+  const localOnlyIng = state.ingredients.filter(i=>!rIngNames.has(nameKey(i.nom)));
+  const localOnlyRec = state.recettes.filter(r=>!rRecNames.has(nameKey(r.nom)));
+  state.ingredients = rIng.concat(localOnlyIng);
+  state.recettes    = rRec.concat(localOnlyRec);
+  if(remote.plan) state.plan = remote.plan;
+  if(remote.objectifs) state.objectifs = remote.objectifs;
+  if(remote.pesees) state.pesees = remote.pesees;
+  if(remote.checked) state.checked = remote.checked;
 }
 async function cloudSignUp(){
   const email=val('cE'), password=val('cP');
