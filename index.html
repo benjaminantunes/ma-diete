@@ -11,6 +11,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" href="icon-192.png">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --bg:#F6F7F4; --surface:#FFFFFF; --ink:#1E2620; --muted:#69736D; --line:#E3E8E0;
@@ -3858,6 +3859,16 @@ const SLOTS = [
 const JOURS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
 const STORE_KEY = 'diete_v1';
 
+// --- Cloud (Supabase) : la clé "anon" est publique par conception ; ce sont les
+// règles RLS (script SQL) qui protègent les données. Laisser url vide = mode 100% local. ---
+const CLOUD = {
+  url: 'https://eklddopquxrhinbjisso.supabase.co',
+  anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVrbGRkb3BxdXhyaGluYmppc3NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNzA3MTQsImV4cCI6MjA5Njk0NjcxNH0.oZ4jlAuE2-1U_C1CnlRCwBbqOAShSkhvtz75HUSxzB4'
+  // Variante "nouvelle clé" si besoin : 'sb_publishable_NBJx9qSiFxNKXD3-5Uaucw_PkfCZYhJ'
+};
+const sb = (CLOUD.url && window.supabase) ? window.supabase.createClient(CLOUD.url, CLOUD.anonKey) : null;
+let cloudUser = null;
+
 let state = null;
 let view = 'semaine';
 let week = 1;
@@ -3888,16 +3899,74 @@ function save(){
   clearTimeout(saveTimer);
   saveTimer = setTimeout(async ()=>{
     const payload = JSON.stringify(state);
-    try{ localStorage.setItem(STORE_KEY, payload); setSaveState('Sauvegardé ✓'); return; }catch(e){}
-    try{ if(window.storage){ await window.storage.set(STORE_KEY, payload); setSaveState('Sauvegardé ✓'); return; } }catch(e){}
-    storageOK = false; setSaveState('Stockage indisponible — pensez à exporter');
+    let localOK = false;
+    try{ localStorage.setItem(STORE_KEY, payload); localOK = true; }catch(e){}
+    if(!localOK){ try{ if(window.storage){ await window.storage.set(STORE_KEY, payload); localOK = true; } }catch(e){} }
+    if(sb && cloudUser){
+      const ok = await cloudPushNow();
+      setSaveState(ok ? 'Synchronisé ☁︎ ✓' : (localOK ? 'Local ✓ · cloud à réessayer' : 'Stockage indisponible'));
+    } else {
+      storageOK = localOK;
+      setSaveState(localOK ? 'Sauvegardé ✓' : 'Stockage indisponible — pensez à exporter');
+    }
   }, 350);
 }
-function setSaveState(t){ document.getElementById('saveState').textContent = t; }
+function setSaveState(t){ const el = document.getElementById('saveState'); if(el) el.textContent = t; }
 async function load(){
   try{ const v = localStorage.getItem(STORE_KEY); if(v){ state = migrate(JSON.parse(v)); return; } }catch(e){}
   try{ if(window.storage){ const r = await window.storage.get(STORE_KEY); if(r && r.value){ state = migrate(JSON.parse(r.value)); return; } } }catch(e){}
   state = freshState();
+}
+
+// ---------------- cloud (Supabase) ----------------
+function val(id){ const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+async function cloudPushNow(){
+  if(!sb || !cloudUser) return false;
+  try{
+    const { error } = await sb.from('profiles').upsert({ id: cloudUser.id, data: state, updated_at: new Date().toISOString() });
+    return !error;
+  }catch(e){ return false; }
+}
+async function cloudPull(){
+  setSaveState('Synchronisation…');
+  let row=null, err=null;
+  try{ const res = await sb.from('profiles').select('data').eq('id', cloudUser.id).maybeSingle(); row=res.data; err=res.error; }
+  catch(e){ err=e; }
+  if(err){
+    setSaveState('Cloud : erreur');
+    alert("Lecture cloud impossible : "+(err.message||err)+"\n\nAs-tu exécuté le script SQL (table « profiles » + règles RLS) dans Supabase ?");
+    return;
+  }
+  if(row && row.data){
+    const remote = migrate(row.data);
+    mergeLibrary(remote);                       // garde tes ajouts locaux, ajoute ceux du compte
+    if(remote.plan) state.plan = remote.plan;
+    if(remote.objectifs) state.objectifs = remote.objectifs;
+    if(remote.pesees) state.pesees = remote.pesees;
+    if(remote.checked) state.checked = remote.checked;
+  }
+  const ok = await cloudPushNow();              // converge les deux côtés
+  setSaveState(ok ? 'Synchronisé ☁︎ ✓' : 'Local ✓ · cloud à réessayer');
+}
+async function cloudSignUp(){
+  const email=val('cE'), password=val('cP');
+  if(!email || !password) return alert('Email et mot de passe requis.');
+  let res; try{ res = await sb.auth.signUp({ email, password }); }catch(e){ return alert('Erreur réseau : '+e); }
+  if(res.error) return alert('Inscription : '+res.error.message);
+  if(res.data && res.data.session){ cloudUser = res.data.user; await cloudPull(); render(); }
+  else alert("Compte créé. Si la confirmation par email est activée côté Supabase, valide le lien reçu puis connecte-toi (ou désactive « Confirm email » dans Authentication → Providers → Email).");
+}
+async function cloudSignIn(){
+  const email=val('cE'), password=val('cP');
+  if(!email || !password) return alert('Email et mot de passe requis.');
+  let res; try{ res = await sb.auth.signInWithPassword({ email, password }); }catch(e){ return alert('Erreur réseau : '+e); }
+  if(res.error) return alert('Connexion : '+res.error.message);
+  cloudUser = res.data.user; await cloudPull(); render();
+}
+async function cloudSignOut(){ try{ await sb.auth.signOut(); }catch(e){} cloudUser=null; setSaveState('Déconnecté'); render(); }
+async function cloudRestore(){
+  if(!sb) return;
+  try{ const { data } = await sb.auth.getSession(); if(data && data.session){ cloudUser = data.session.user; await cloudPull(); } }catch(e){}
 }
 
 // ---------------- helpers ----------------
@@ -3956,7 +4025,7 @@ function bars(t, tg){
 }
 
 // ---------------- nav / render ----------------
-const VIEWS = [['semaine','Semaine'],['recettes','Recettes'],['ingredients','Ingrédients'],['courses','Courses'],['poids','Poids'],['objectifs','Objectifs']];
+const VIEWS = [['semaine','Semaine'],['recettes','Recettes'],['ingredients','Ingrédients'],['courses','Courses'],['poids','Poids'],['objectifs','Objectifs'],['compte','Compte']];
 function renderNav(){
   document.getElementById('nav').innerHTML = VIEWS.map(([id,nom])=>
     `<button class="${view===id?'on':''}" onclick="go('${id}')">${nom}</button>`).join('');
@@ -3970,6 +4039,7 @@ function render(){
   else if(view==='ingredients'){ m.innerHTML = vIngredients(); filterIngRows(); }
   else if(view==='courses') m.innerHTML = vCourses();
   else if(view==='poids') m.innerHTML = vPoids();
+  else if(view==='compte') m.innerHTML = vCompte();
   else m.innerHTML = vObjectifs();
 }
 
@@ -4346,6 +4416,30 @@ function poidsChart(ps){
     <text x="${W-P.r}" y="${H-8}" text-anchor="end" font-size="11" fill="#69736D">${frDate(ps[ps.length-1].date)}</text></svg>`;
 }
 
+// ---------------- vue Compte ----------------
+function vCompte(){
+  if(!sb) return `<div class="card empty">Mode local : la synchronisation n'est pas configurée (ou la librairie n'a pas pu se charger). Tes données restent enregistrées sur cet appareil.</div>`;
+  if(cloudUser) return `<div class="card" style="max-width:460px">
+    <h3 style="margin-bottom:8px">Compte connecté</h3>
+    <p class="muted" style="margin-bottom:6px"><b>${esc(cloudUser.email||'')}</b></p>
+    <p class="muted" style="margin-bottom:12px">Tes recettes, ingrédients, planning, objectifs et pesées sont sauvegardés en ligne et synchronisés automatiquement sur tous tes appareils connectés à ce compte.</p>
+    <div class="row">
+      <button class="btn ghost" onclick="cloudPull()">Re-synchroniser maintenant</button>
+      <button class="btn ghost danger" onclick="cloudSignOut()">Se déconnecter</button>
+    </div></div>`;
+  return `<div class="card" style="max-width:420px">
+    <h3 style="margin-bottom:4px">Connexion / inscription</h3>
+    <p class="muted" style="margin-bottom:12px">Connecte-toi pour sauvegarder tes données en ligne et les retrouver sur tous tes appareils.</p>
+    <div class="field"><label>Email</label><input id="cE" type="email" autocomplete="email"></div>
+    <div class="field"><label>Mot de passe</label><input id="cP" type="password" autocomplete="current-password"></div>
+    <div class="row">
+      <button class="btn green" onclick="cloudSignIn()">Se connecter</button>
+      <button class="btn ghost" onclick="cloudSignUp()">Créer un compte</button>
+    </div>
+    <p class="muted" style="margin-top:12px">À la première connexion, tes données locales actuelles sont envoyées sur ton compte. Ensuite, tout reste synchronisé.</p>
+  </div>`;
+}
+
 // ---------------- vue Objectifs ----------------
 function vObjectifs(){
   const o = state.objectifs, tg = targets();
@@ -4373,12 +4467,16 @@ function vObjectifs(){
     </div>
     <div class="card">
       <h3 style="margin-bottom:10px">Données</h3>
-      <p class="muted" style="margin-bottom:10px">${state.recettes.length} recettes · ${state.ingredients.length} ingrédients. La base est sauvegardée automatiquement dans l'appli ; l'export JSON sert de copie de secours et de format d'échange.</p>
+      <p class="muted" style="margin-bottom:10px">${state.recettes.length} recettes · ${state.ingredients.length} ingrédients. La base est sauvegardée automatiquement dans l'appli.</p>
+      <div class="row" style="margin-bottom:8px">
+        <button class="btn ghost" onclick="exportJSON()">Sauvegarde complète (.json)</button>
+        <button class="btn ghost" onclick="exportLibrary()">Exporter recettes &amp; ingrédients</button>
+      </div>
       <div class="row">
-        <button class="btn ghost" onclick="exportJSON()">Exporter la base (.json)</button>
-        <button class="btn ghost" onclick="document.getElementById('importFile').click()">Importer</button>
+        <button class="btn green" onclick="document.getElementById('importFile').click()">Importer / fusionner</button>
         <button class="btn ghost danger" onclick="resetAll()">Réinitialiser</button>
       </div>
+      <p class="muted" style="margin-top:10px">À l'import, les recettes et ingrédients <b>déjà présents (même nom) sont ignorés</b> et les nouveaux sont <b>ajoutés</b> — rien n'est écrasé. Un fichier de sauvegarde complète propose en plus de tout restaurer.</p>
     </div>
   </div>`;
 }
@@ -4388,23 +4486,75 @@ function resetAll(){
 }
 
 // ---------------- export / import ----------------
-function exportJSON(){
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+function download(text, filename){
+  const blob = new Blob([text], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'ma-diete.json';
+  a.download = filename;
   a.click(); URL.revokeObjectURL(a.href);
 }
+function exportJSON(){ download(JSON.stringify(state, null, 2), 'ma-diete-sauvegarde.json'); }
+function exportLibrary(){
+  download(JSON.stringify({type:'ma-diete-bibliotheque', ingredients: state.ingredients, recettes: state.recettes}, null, 2),
+    'ma-diete-recettes.json');
+}
+
+// signature "ligne identique" = nom normalisé (un aliment / une recette = son nom)
+function nameKey(s){ return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); }
+
+// Fusion : ignore les lignes déjà présentes (même nom), ajoute les nouvelles, n'écrase rien.
+function mergeLibrary(incoming){
+  const inIngs = incoming.ingredients || [];
+  const inRecs = incoming.recettes || [];
+  const curByName = new Map(state.ingredients.map(i=>[nameKey(i.nom), i]));
+  const curById   = new Map(state.ingredients.map(i=>[i.id, i]));
+  const idMap = {}; // id entrant -> id retenu dans la bibliothèque actuelle
+  let addedIng=0, skippedIng=0;
+  inIngs.forEach(inc=>{
+    const k = nameKey(inc.nom);
+    const ex = curByName.get(k);
+    if(ex){ idMap[inc.id] = ex.id; skippedIng++; return; }       // déjà présent -> ignoré (pas d'écrasement)
+    let nid = inc.id;
+    if(curById.has(nid)) nid = uid(inc.nom, state.ingredients);  // collision d'id sur contenu différent
+    const obj = {...inc, id:nid};
+    state.ingredients.push(obj); curByName.set(k,obj); curById.set(nid,obj);
+    idMap[inc.id] = nid; addedIng++;
+  });
+  const curRecNames = new Set(state.recettes.map(r=>nameKey(r.nom)));
+  let addedRec=0, skippedRec=0;
+  inRecs.forEach(inc=>{
+    if(curRecNames.has(nameKey(inc.nom))){ skippedRec++; return; } // recette déjà présente -> ignorée
+    const ings = (inc.ingredients||[]).map(it=>({
+      ingredient_id: idMap[it.ingredient_id] || it.ingredient_id, // ré-aiguille vers l'id local
+      quantite_g: it.quantite_g
+    }));
+    let nid = inc.id;
+    if(state.recettes.some(r=>r.id===nid)) nid = uid(inc.nom, state.recettes);
+    state.recettes.push({...inc, id:nid, ingredients:ings});
+    curRecNames.add(nameKey(inc.nom)); addedRec++;
+  });
+  return {addedIng, addedRec, skippedIng, skippedRec};
+}
+
 function importJSON(input){
   const f = input.files[0]; if(!f) return;
   const reader = new FileReader();
   reader.onload = ()=>{
-    try{
-      const d = JSON.parse(reader.result);
-      if(!d.ingredients || !d.recettes) throw 0;
-      if(!d.plan) { const s = freshState(); d.plan = s.plan; d.objectifs = d.objectifs||s.objectifs; d.checked = d.checked||{}; }
-      state = migrate(d); save(); render(); setSaveState('Importé ✓');
-    }catch(e){ alert("Fichier invalide : il faut un JSON avec 'ingredients' et 'recettes'."); }
+    let d;
+    try{ d = JSON.parse(reader.result); }
+    catch(e){ return alert("Fichier illisible (JSON invalide)."); }
+    if(!d.ingredients && !d.recettes) return alert("Ce fichier ne contient ni ingrédients ni recettes.");
+    if(d.plan){ // sauvegarde complète : restaurer tout, ou seulement fusionner la bibliothèque
+      const replace = confirm(
+        "Ce fichier est une sauvegarde complète.\n\n"+
+        "• OK : tout remplacer (planning, objectifs, poids inclus).\n"+
+        "• Annuler : ne fusionner que les recettes et ingrédients (sans rien écraser).");
+      if(replace){ state = migrate(d); save(); render(); return alert("Sauvegarde restaurée."); }
+    }
+    const r = mergeLibrary(d);
+    save(); render(); setSaveState('Fusion ✓');
+    alert(`Fusion terminée :\n+ ${r.addedIng} ingrédient(s) et + ${r.addedRec} recette(s) ajoutés.\n`+
+          `${r.skippedIng + r.skippedRec} doublon(s) déjà présent(s), ignoré(s).`);
   };
   reader.readAsText(f); input.value='';
 }
@@ -4424,7 +4574,7 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
   navigator.serviceWorker.register('./sw.js').catch(()=>{});
 }
-load().then(()=>{ render(); });
+load().then(async ()=>{ render(); await cloudRestore(); render(); });
 </script>
 </body>
 </html>
